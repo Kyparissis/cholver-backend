@@ -1,0 +1,28 @@
+{
+  "name": "cholver",
+  "version": "1.0.1",
+  "description": "This is the Cholver application API specifications",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node index.js",
+    "test": "c8 ava"
+  },
+  "keywords": [
+    "swagger"
+  ],
+  "license": "Unlicense",
+  "private": true,
+  "dependencies": {
+    "connect": "^3.2.0",
+    "js-yaml": "^3.3.0",
+    "oas3-tools": "^2.2.3"
+  },
+  "devDependencies": {
+    "ava": "^5.3.1",
+    "c8": "^8.0.1",
+    "got": "^11.8.3",
+    "listen": "^1.0.1",
+    "test-listen": "^1.1.0"
+  }
+}
