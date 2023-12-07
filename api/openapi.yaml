@@ -1,0 +1,621 @@
+openapi: 3.0.3
+info:
+  title: Cholver
+  description: This is the Cholver application API specifications
+  version: 1.0.1
+servers:
+- url: /
+tags:
+- name: User
+  description: All actions on users
+- name: Ad
+  description: All actions on users' ads
+- name: Rating
+  description: All actions on users' ratings
+paths:
+  /user:
+    get:
+      tags:
+      - User
+      summary: Search for users by keyword
+      description: |
+        FR9 - The user must be able to search for other users' profiles.
+      operationId: userGET
+      parameters:
+      - name: keyword
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of profiles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                x-content-type: application/json
+        "400":
+          description: Invalid request
+      x-swagger-router-controller: User
+    post:
+      tags:
+      - User
+      summary: Create user
+      description: |
+        FR1 - The user must be able to edit their personal info.
+      operationId: userPOST
+      requestBody:
+        description: Information needed to create a new user profile
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        required: true
+      responses:
+        "201":
+          description: Successful user creation
+        "400":
+          description: Invalid or missing fields
+      x-swagger-router-controller: User
+  /user/{userID}:
+    get:
+      tags:
+      - User
+      summary: Get user profile by ID
+      description: |
+        FR1 - The user must be able to edit their personal info. |
+        FR2 - The user must be able to edit their profile picture.
+      operationId: userUserIDGET
+      parameters:
+      - name: userID
+        in: path
+        description: User that should be returned
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: User profile details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: User not found
+      x-swagger-router-controller: User
+    put:
+      tags:
+      - User
+      summary: Update user information
+      description: |
+        FR1 - The user must be able to edit their personal info.
+      operationId: userUserIDPUT
+      parameters:
+      - name: userID
+        in: path
+        description: User that needs to be updated
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/User'
+      responses:
+        "200":
+          description: User profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Invalid request
+      x-swagger-router-controller: User
+    delete:
+      tags:
+      - User
+      summary: Delete user profile by ID
+      description: "FR1 - The user must be able to edit their personal info. \n"
+      operationId: userUserIDDELETE
+      parameters:
+      - name: userID
+        in: path
+        description: User that should be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: User profile deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: User not found
+      x-swagger-router-controller: User
+  /user/{userID}/profile-picture:
+    put:
+      tags:
+      - User
+      summary: Upload a picture
+      operationId: userUserIDProfile_picturePUT
+      parameters:
+      - name: userID
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/userID_profilepicture_body'
+        required: true
+      responses:
+        "200":
+          description: Picture uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: Invalid request
+      x-swagger-router-controller: User
+  /user/{userID}/ad:
+    get:
+      tags:
+      - Ad
+      summary: Get all ads from specific user
+      description: |
+        FR7 - The user must be able to view their own ads.
+      operationId: userUserIDAdGET
+      parameters:
+      - name: userID
+        in: path
+        description: the user whose ads should be returned
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of ads
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ad'
+                x-content-type: application/json
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_message'
+      x-swagger-router-controller: Ad
+    post:
+      tags:
+      - Ad
+      summary: Create a new ad
+      description: "FR3 - The user must be able to post a new ad. \n"
+      operationId: userUserIDAdPOST
+      parameters:
+      - name: userID
+        in: path
+        description: user that posts the ad
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userID_Ad_body'
+        required: true
+      responses:
+        "200":
+          description: Ad created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_message'
+        "400":
+          description: Invalid description or invalid title
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_message'
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_message'
+      x-swagger-router-controller: Ad
+  /user/{userID}/ad/{adID}:
+    get:
+      tags:
+      - Ad
+      summary: Get the interested users for an ad
+      description: |
+        FR8 - The user must be able to view the list of interested users for one of their own ads.
+      operationId: userUserIDAdAdIDGET
+      parameters:
+      - name: userID
+        in: path
+        description: the user that posted the ad
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: adID
+        in: path
+        description: the ad whose interested users should be returned
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of profiles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                x-content-type: application/json
+        "404":
+          description: User not found / The user has not ads / The user doesn't have
+            ads with this adID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_message'
+      x-swagger-router-controller: Ad
+    delete:
+      tags:
+      - Ad
+      summary: Delete an ad from user account
+      description: |
+        FR4 - The user must be able to delete their post.
+      operationId: userUserIDAdAdIDDELETE
+      parameters:
+      - name: userID
+        in: path
+        description: the user that deletes an ad
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: adID
+        in: path
+        description: the ad that gets deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful deletion
+        "404":
+          description: User not found / the user has not ads / the user doesn't have
+            ads with this adID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_message'
+      x-swagger-router-controller: Ad
+  /ad:
+    get:
+      tags:
+      - Ad
+      summary: Get all ads or search for ads by keyword
+      description: |
+        FR5 - The user must be able to view ads posted by other users.|
+        FR10 - The user must be able to search for ads by keyword.
+      operationId: adGET
+      parameters:
+      - name: keyword
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of ads
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ad_UserProfile'
+                x-content-type: application/json
+      x-swagger-router-controller: Ad
+  /ad/{adID}:
+    put:
+      tags:
+      - Ad
+      summary: Show interest in an ad
+      description: |
+        FR6 - The user must be able to show interest in an ad.
+      operationId: adAdIDPUT
+      parameters:
+      - name: adID
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ad_adID_body'
+        required: true
+      responses:
+        "200":
+          description: Successfully showed interest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ad'
+        "402":
+          description: this adID doesn't exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_message'
+        "404":
+          description: User not found / this adID doesn't exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_message'
+      x-swagger-router-controller: Ad
+  /user/{userID}/rate:
+    put:
+      tags:
+      - Rating
+      summary: Give a rating to a user
+      description: |
+        FR11 - The user must be able to rate other users.
+      operationId: userUserIDRatePUT
+      parameters:
+      - name: userID
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userID_rate_body'
+        required: true
+      responses:
+        "200":
+          description: Successfully rated user
+        "404":
+          description: Rater or rated user not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_message'
+      x-swagger-router-controller: Rating
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        userID:
+          type: integer
+          format: int64
+        fullname:
+          type: string
+        email:
+          type: string
+        age:
+          type: integer
+          format: int64
+        city:
+          type: string
+        phone:
+          type: string
+        userDescription:
+          type: string
+        gender:
+          type: string
+        rating:
+          type: integer
+          format: int64
+        profilePic:
+          type: string
+          format: binary
+      example:
+        userDescription: userDescription
+        gender: gender
+        city: city
+        phone: phone
+        profilePic: ""
+        rating: 1
+        fullname: fullname
+        userID: 0
+        email: email
+        age: 6
+    UserCreate:
+      type: object
+      properties:
+        fullname:
+          type: string
+        email:
+          type: string
+        age:
+          type: integer
+          format: int64
+        city:
+          type: string
+        phone:
+          type: string
+        userDescription:
+          type: string
+        gender:
+          type: string
+        profilePic:
+          type: string
+          format: binary
+    Ad:
+      type: object
+      properties:
+        adID:
+          type: integer
+          format: int64
+        userID:
+          type: integer
+          format: int64
+        title:
+          type: string
+        adDescription:
+          type: string
+        date:
+          type: string
+        city:
+          type: string
+      example:
+        adDescription: adDescription
+        date: date
+        adID: 0
+        city: city
+        title: title
+        userID: 6
+    Ad_UserProfile:
+      type: object
+      properties:
+        adID:
+          type: integer
+          format: int64
+        userID:
+          type: integer
+          format: int64
+        title:
+          type: string
+        adDescription:
+          type: string
+        date:
+          type: string
+        city:
+          type: string
+        user:
+          $ref: '#/components/schemas/Ad_UserProfile_user'
+      example:
+        adDescription: adDescription
+        date: date
+        adID: 0
+        city: city
+        title: title
+        userID: 6
+        user:
+          profilePic: ""
+          rating: 5.962133916683182
+          fullname: fullname
+          userID: 1
+    userID_Ad_body:
+      type: object
+      properties:
+        title:
+          type: string
+        adDescription:
+          type: string
+    response_message:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: message
+    Ad_adID_body:
+      type: object
+      properties:
+        userID:
+          type: integer
+          format: int64
+    userID_rate_body:
+      type: object
+      properties:
+        raterUserID:
+          type: integer
+          format: int64
+        rating:
+          type: number
+    userID_profilepicture_body:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+    inline_response_200:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Picture uploaded successfully
+      example:
+        message: Picture uploaded successfully
+    Ad_UserProfile_user:
+      type: object
+      properties:
+        userID:
+          type: integer
+          format: int64
+        fullname:
+          type: string
+        rating:
+          type: number
+        profilePic:
+          type: string
+          format: binary
+      example:
+        profilePic: ""
+        rating: 5.962133916683182
+        fullname: fullname
+        userID: 1
+  requestBodies:
+    User:
+      description: User model
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+      required: true
+    Ad:
+      description: User model
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Ad'
+      required: true
