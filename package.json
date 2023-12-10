@@ -15,6 +15,8 @@
   "private": true,
   "dependencies": {
     "connect": "^3.2.0",
+    "form-data-encoder": "^4.0.2",
+    "formdata-node": "^6.0.3",
     "got": "^11.8.3",
     "js-yaml": "^3.3.0",
     "oas3-tools": "^2.2.3"
