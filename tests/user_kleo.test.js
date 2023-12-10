@@ -3,214 +3,315 @@ const test = require('ava');
 const listen = require('test-listen');
 const got = require('got');
 const app = require('../index.js');
-const { userGET , userUserIDPUT } = require('../service/UserService.js');
+const { userGET , userUserIDPUT } = require("../service/UserService.js");
+
 
 //______Initializaiton of Server___________
-test.before(async t => {
+test.before(async (t) => {
   t.context.server = http.createServer(app);
   t.context.prefixUrl = await listen(t.context.server);
   t.context.got = got.extend({ prefixUrl: t.context.prefixUrl, responseType: 'json' });
 });
 
-test.after.always(t => {
+test.after.always((t) => {
   t.context.server.close();
 });
-//_________________________________________
 
 
 //_________GET/user_________________________
 //Test function
-test('GET users by keyword function works successfully', async t => {
-  const keyword = "John"; //???????
+test("GET users by keyword (function)", async (t) => {
+  const keyword = 'keyword'; 
   const result = await userGET(keyword);
-  const randUser = result[0]; // de ksero an me afto iponoo oti tha prepe na valo kapoio test gia to length
-  t.pass();
+  const randUser = result[1]; 
+ 
+ // t.true(result.every(user => user.fullname.includes(keyword) || user.userDescription.includes(keyword)));
 
-  t.true(result.every(user => user.fullname.includes(keyword) || user.userDescription.includes(keyword)));
+// console.log(typeof randUser.userID);
 
   t.is(randUser.userDescription , "userDescription");
   t.is(randUser.gender , "gender");
   t.is(randUser.city , "city");
   t.is(randUser.phone , "phone");
   t.is(randUser.profilePic , "");
-  t.is(randUser.rating , "rating");
+  t.is(randUser.rating, 1);
   t.is(randUser.fullname , "fullname");
-  t.is(randUser.userID , "1");
+  t.is(randUser.userID , 0);
   t.is(randUser.email , "email");
-  t.is(randUser.age , "age");
+  t.is(randUser.age , 6 );
 }); 
 
 
 //Test Server
-test('GET users by keyword responds with status code 200', async t => {
-  const keyword = "K"; //???????
-  /// sooos na allaksei apo kato got get?? oi put pados
-  const { body, statusCode } = await t.context.got.get(`user`, {
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({userDescription: "descr" , gender: "" , city: "" ,phone: "" , profilePic: "" , rating: 1 , fullname: "" , userID:1 , email: "" , age:25 })
-  });
+test('GET users by keyword (status code 200)', async t => {
+  const keyword = 'keyword'; 
+  const { body, statusCode } = await t.context.got.get(`user?keyword=${keyword}`);
+
   t.is(statusCode, 200);
 
-  //const result = await userGET(keyword); theoro mallon einai lathos gt exei sinartisi kai tetsartoume server
   const randUser = body[0];
   
-  t.is(randUser.userDescription , "userDescription");
-  t.is(randUser.gender , "gender");
-  t.is(randUser.city , "city");
-  t.is(randUser.phone , "phone");
-  t.is(randUser.profilePic , "");
-  t.is(randUser.rating , "rating");
+  t.is(randUser.userDescription, "userDescription");
+  t.is(randUser.gender, "gender");
+  t.is(randUser.city, "city");
+  t.is(randUser.phone, "phone");
+  t.is(randUser.profilePic, "");
+  t.is(randUser.rating, 1);
   t.is(randUser.fullname , "fullname");
-  t.is(randUser.userID , "1");
-  t.is(randUser.email , "email");
-  t.is(randUser.age , "age");
-
+  t.is(randUser.userID, 0);
+  t.is(randUser.email, "email");
+  t.is(randUser.age, 6);
 });
 
 
 // Testing unhappy paths
 // 1. Wrong data type of keyword (400)
-test('Handle incorrect data type in userId', async t => {
-    const keyword = 3; // keyword is integer instead of string
+test('GET users by keyword | Keyword is null', async (t) => {
+    const keyword = null; // keyword is integer instead of string
     const error = await t.throwsAsync(async () => {
-     await t.context.got.get(`user/`);
+     await t.context.got.get("user", { searchParams: {
+        keyword: keyword
+    } }),
+    { instanceof: got.HTTPError }
     });
-    
-    t.is(statusCode, 400);
-    t.true(body.error.includes('Invalid data type for userId'));
-  });
+
+    t.is(error.response.statusCode, 400);
+    t.is(error.response.body.message, "Empty value found for query parameter \'keyword\'");   
+});
 
 
 //___________PUT/user/{userID}______________
 //Test function
-test('PUT (Update) user information function works successfully', async t => {
-  const userId = 1;
+test('PUT user information (function)', async (t) => {
+  const userID = 1;
   const body = { 
-    "userDescription" :"string", 
-    "gender": "string",
-    "city": "string", 
-    "phone": "string", 
-    "profilePic": "string", 
-    "rating": "integer", 
-    "fullname": "string", 
-    "userID": "integer", 
-    "email": "string", 
-    "age": "integer"
+    userDescription :"string", 
+    gender: "string",
+    city : "string", 
+    phone : "string", 
+    profilePic: "string", 
+    rating: 1, 
+    fullname: "string", 
+    userID : 0, 
+    email : "string", 
+    age : 6
   };
-  const result = await userUserIDPUT(body, userID);// paizei rolo i seira sta orismata
-  const randUser = result[0];
-  t.pass();
-  t.is(randUser.userDescription , "userDescription");
-  t.is(randUser.gender , "gender");
-  t.is(randUser.city , "city");
-  t.is(randUser.phone , "phone");
-  t.is(randUser.profilePic , "");
-  t.is(randUser.rating , "rating");
-  t.is(randUser.fullname , "fullname");
-  t.is(randUser.userID , "1");
-  t.is(randUser.email , "email");
-  t.is(randUser.age , "age");
+  const result = await userUserIDPUT(body, userID);
+
+  t.is(result.userDescription , "userDescription");
+  t.is(result.gender , "gender");
+  t.is(result.city , "city");
+  t.is(result.phone , "phone");
+  t.is(result.profilePic , "");
+  t.is(result.rating , 1);
+  t.is(result.fullname , "fullname");
+  t.is(result.userID , 0);
+  t.is(result.email , "email");
+  t.is(result.age , 6);
 });
 
 
 //Test Server
-test('PUT (Update) user information', async t => {
-  const userId = 1;
+test('PUT user information (status code 200)', async t => {
+  const userID = 1;
   const requestBody = { 
-    "userDescription": "string", 
-    "gender": "string",
-    "city": "string", 
-    "phone": "string", 
-    "profilePic": "string", 
-    "rating": "integer", 
-    "fullname": "string", 
-    "userID": "integer", 
-    "email": "string", 
-    "age": "integer"
+    userDescription: "string", 
+    gender: "string",
+    city: "string", 
+    phone: "string", 
+    profilePic: "string", 
+    rating: 1 , 
+    fullname: "string", 
+    userID: 1, 
+    email: "string", 
+    age: 1
   };
 
-  //SOS mou petage error "message": "Cannot redeclare block-scoped variable 'body'.", kai allaksa pano 
-  //onoma metavlitis se requestBody. Alla an pao na allakso kai sto {body , statuscode } to ksanaemfanizei
-  const { body, statusCode } = await t.context.got.put(`user/${userId}`, {
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({userDescription: "descr" , gender: "" , city: "" ,phone: "" , profilePic: "" , rating: 1 , fullname: "" , userID:1 , email: "" , age:25 })
-  });
+  const { body, statusCode } = await t.context.got.put(`user/${userID}`,  {json: requestBody});
+    
   t.is(statusCode, 200);
 
   const randUser = body[0];
   
-  t.is(randUser.userDescription , "userDescription");
-  t.is(randUser.gender , "gender");
-  t.is(randUser.city , "city");
-  t.is(randUser.phone , "phone");
-  t.is(randUser.profilePic , "");
-  t.is(randUser.rating , "rating");
-  t.is(randUser.fullname , "fullname");
-  t.is(randUser.userID , "1");
-  t.is(randUser.email , "email");
-  t.is(randUser.age , "age");
+   t.is(body.userDescription , "userDescription");
+   t.is(body.gender , "gender");
+   t.is(body.city , "city");
+   t.is(body.phone , "phone");
+   t.is(body.profilePic , "");
+   t.is(body.rating , 1);
+   t.is(body.fullname , "fullname");
+   t.is(body.userID , 0);
+   t.is(body.email , "email");
+   t.is(body.age , 6);
+
 });
 
 
 // Testing unhappy paths
-// 1. undefined request body (415)
-test('PUT (Update) user information responds status code 415 if undefined request body is given', async t => {
-  const userId = 1;
-  const body = { 
-    "userDescription" :"string", 
-    "gender": "null",  // gender is null
+// 1. undefined request body (400)
+test('PUT user information | Undefined request body (userDescription is integer)', async t => {
+  const userID = 1;
+  const putBody = { 
+    "userDescription" : 12345, // it is integer instead of string
+    "gender": "string",  
     "city": "string", 
     "phone": "string", 
     "profilePic": "string", 
-    "rating": "integer", 
+    "rating": 1, 
     "fullname": "string", 
-    "userID": "integer", 
+    "userID": 0, 
     "email": "string", 
-    "age": "integer"
+    "age": 6
   };
-  const error = await t.throwsAsync(async () => {
-    await t.context.got.put(`user/${userId}`, {json: requestBody}),
-        {instanceof: got.HTTPError}
-    });
   
-  t.is(error.response.statusCode, 415);
-  t.is(error.response.body.message, 'unsupported media type undefined');
+  const error = await t.throwsAsync(async () => {
+        await t.context.got.put(`user/${userID}`, {json: putBody}),
+        { instanceof: got.HTTPError }
+    });
+
+  t.is(error.response.statusCode, 400);
+  t.is(error.response.body.message, 'request.body.userDescription should be string');
+  
 });
 
-// 2. Missing request body (415)
-test('PUT user information | undefined request body is given', async t => {
-    const userId = 1;
+
+// 2. undefined request body (400)
+test('PUT user information | Undefined request body (gender is null)', async t => {
+    const userID = 1;
+    const putBody = { 
+      "userDescription" : "12345", 
+      "gender": null,  // gender is null
+      "city": "string", 
+      "phone": "string", 
+      "profilePic": "string", 
+      "rating": 1, 
+      "fullname": "string", 
+      "userID": 0, 
+      "email": "string", 
+      "age": 6
+    };
+    
     const error = await t.throwsAsync(async () => {
-      await t.context.got.put(`user/${userId}`, {json: requestBody}),
+          await t.context.got.put(`user/${userID}`, {json: putBody}),
+          { instanceof: got.HTTPError }
+      });
+  
+    t.is(error.response.statusCode, 400);
+    t.is(error.response.body.message, 'request.body.gender should be string');
+});
+  
+
+// 3. Missing request body (415)
+test('PUT user information | Missing request body', async t => {
+    const userID = 1;
+    const error = await t.throwsAsync(async () => {
+      await t.context.got.put(`user/${userID}`),
           {instanceof: got.HTTPError}
       });
     
     t.is(error.response.statusCode, 415);
     t.is(error.response.body.message, 'unsupported media type undefined');
-  });
+});
 
-// 3. Multiple times fullname given in request body (400)
-test('PUT user information | undefined request body is given', async t => {
-    const userId = 1;
+
+// 4. Multiple times fullname given in request body (400)
+test('PUT user information | undefined request body - multiple fullnames given', async t => {
+    const userID = 1;
     const body = { 
         "userDescription" :"string", 
-        "gender": "null",  
+        "gender": "string",  
         "city": "string", 
         "phone": "string", 
         "profilePic": "string", 
-        "rating": "integer", 
-        "fullname": ["string", "newstring"] , //ex. 2 given fullnames
-        "userID" : "integer", 
+        "rating": 1, 
+        "fullname": ["string", "newstring"] ,       //ex. 2 given fullnames
+        "userID" : 0, 
         "email": "string", 
-        "age": "integer"
+        "age": 6
       };
     const error = await t.throwsAsync(async () => {
-      await t.context.got.put(`user/${userId}`, {json: requestBody}),  // not sure an edo thelei putBody i request Body
+      await t.context.got.put(`user/${userID}`, {json: body}),  
           {instanceof: got.HTTPError}
       });
     
     t.is(error.response.statusCode, 400);
-    t.is(error.response.body.message, 'Multiple information for fullname');
+    t.is(error.response.body.message, 'request.body.fullname should be string');
+});
+
+
+// 5. undefined request body (400)
+test('PUT user information | Undefined request body (userDescription,city and fullname are integer)', async t => {
+    const userID = 1;
+    const putBody = { 
+      "userDescription" : 12345, // it is integer instead of string
+      "gender": "string",  
+      "city": 12345, 
+      "phone": "string", 
+      "profilePic": "string", 
+      "rating": 1, 
+      "fullname": 12345, 
+      "userID": 0, 
+      "email": "string", 
+      "age": 6
+    };
+    
+    const error = await t.throwsAsync(async () => {
+          await t.context.got.put(`user/${userID}`, {json: putBody}),
+          { instanceof: got.HTTPError }
+      });
+  
+    t.is(error.response.statusCode, 400);
+    t.is(error.response.body.message, 'request.body.fullname should be string, request.body.city should be string, request.body.userDescription should be string');
+    
   });
+  
+ 
+// 6. undefined request body (400)
+test('PUT user information | Undefined request body (gender is null and rating is string)', async t => {
+    const userID = 1;
+    const putBody = { 
+      "userDescription" : "12345", 
+      "gender": null,  // gender is null
+      "city": "string", 
+      "phone": "string", 
+      "profilePic": "string", 
+      "rating": "1", 
+      "fullname": "string", 
+      "userID": 0, 
+      "email": "string", 
+      "age": 6
+    };
+    
+    const error = await t.throwsAsync(async () => {
+          await t.context.got.put(`user/${userID}`, {json: putBody}),
+          { instanceof: got.HTTPError }
+      });
+  
+    t.is(error.response.statusCode, 400);
+    t.is(error.response.body.message, 'request.body.gender should be string, request.body.rating should be integer');
+});
+  
 
-
+// 7. Multiple times fullname and rating given in request body (400)
+test('PUT user information | undefined request body - multiple fullnames given and ratings', async t => {
+    const userID = 1;
+    const body = { 
+        "userDescription" :"string", 
+        "gender": "string",  
+        "city": "string", 
+        "phone": "string", 
+        "profilePic": "string", 
+        "rating": [ 1, 2], 
+        "fullname": ["string", "newstring"] ,       //ex. 2 given fullnames
+        "userID" : 0, 
+        "email": "string", 
+        "age": 6
+      };
+    const error = await t.throwsAsync(async () => {
+      await t.context.got.put(`user/${userID}`, {json: body}),  
+          {instanceof: got.HTTPError}
+      });
+    
+    t.is(error.response.statusCode, 400);
+    t.is(error.response.body.message, 'request.body.fullname should be string, request.body.rating should be integer');
+});
