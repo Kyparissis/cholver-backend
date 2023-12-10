@@ -79,7 +79,8 @@ test("GET search for ads by keyword by function", async (t) => {
 });
 
 //Test GET all ads by sending a GET request to the server
-test("GET all ads or searching ads by keyword by sending a request", async t =>{
+test("GET all ads by sending a HTTP request", async t =>{
+    //call server without keyword
     const { body, statusCode } = await t.context.got.get(`ad`);
     
     // Assert success status code
@@ -98,16 +99,56 @@ test("GET all ads or searching ads by keyword by sending a request", async t =>{
     t.is(firstAd.userID, 6);
 });
 
+//Test GET search ad by keyword by sending a GET request to the server
+test("GET searching ads by keyword by sending a HTTP request", async t =>{
+    //define parameter
+    const keyword = 'title'; 
+    //call server with keyword
+    const { body, statusCode } = await t.context.got.get(`ad?keyword=${keyword}`);
+    
+    // Assert success status code
+    t.is(statusCode, 200);
+    
+    // Assert that we get two entries (body must be an array) 
+    t.is(body.length, 2);
+    // Get the first of the entries of the body 
+    const firstAd = body[0];
+    // Assert that we get the expected body
+    t.is(firstAd.adDescription, "adDescription");
+    t.is(firstAd.date, "date");
+    t.is(firstAd.adID, 0);
+    t.is(firstAd.city, "city");
+    t.is(firstAd.title, "title");
+    t.is(firstAd.userID, 6);
+});
+
+//Test case for searching ads by keyword with null keyword (by sending a HTTP request to the server)
+test("GET searching ads by null keyword by sending a HTTP request", async t =>{
+    //define parameter
+    const keyword = null;
+    
+    // Send GET request to server
+    const error = await t.throwsAsync(async () => {
+        await t.context.got.get("ad", { searchParams: {
+            keyword: keyword
+        } }),
+        { instanceof: got.HTTPError }
+    });
+    // Assert error status code
+    t.is(error.response.statusCode, 400);
+    // Assert error message
+    t.is(error.response.body.message, "Empty value found for query parameter \'keyword\'");
+});
+
 //---------PUT /ad/{adid}----------
 //Show interest in an ad
-// Test case for showing interest in an ad y calling the function
+// Test case for showing interest in an ad by calling the function
 test('PUT interest in an ad', async (t) => {
 
     //define parameters
     const adId = 0; 
 
     // define request body for showing interest in an ad
-    //const requestBody = 0; //userId
      const requestBody = {
        "userID": 0
      };
@@ -146,12 +187,12 @@ test('PUT interest in an ad - HTTP request', async (t) => {
     // Assert success status code
     t.is(statusCode, 200);
     // Assert that we get the expected body length
-    t.is(Object.keys(body).length, 6); //6???
+    t.is(Object.keys(body).length, 6); 
 
     // Assert that we get the expected body
     t.is(body.adDescription, "adDescription");
     t.is(body.date, "date");
-    t.is(body.adID, adId);
+    t.is(body.adID, 0);
     t.is(body.city, "city");
     t.is(body.title, "title");
     t.is(body.userID, 6);
@@ -190,6 +231,98 @@ test("PUT show interest in an ad with null request body", async t => {
     t.is(error.response.body.message, "request.body.userID should be integer");
 });
 
+// Test case for show interest in ad with string request body (by sending a HTTP request to the server)
+test("PUT show interest in an ad with string request body", async t => {
+    // Define path parameters
+    const adId = 0;
+    const requestBody ={
+        "userID": 'userID1'
+    };
+    // Send PUT request to server
+    const error = await t.throwsAsync(async () => {
+        await t.context.got.put(`ad/${adId}`, {json: requestBody}),
+        { instanceof: got.HTTPError }
+    });
+    // Assert error status code
+    t.is(error.response.statusCode, 400);
+    // Assert error message
+    t.is(error.response.body.message, "request.body.userID should be integer");
+});
+
+// Test case for show interest in ad with request body / string values in an array (by sending a HTTP request to the server)
+test("PUT show interest in an ad with request body  / string values in an array ", async t => {
+    // Define path parameters
+    const adId = 0;
+    const requestBody ={
+        "userID": ['userID1', 'userID2']
+        };
+    // Send PUT request to server
+    const error = await t.throwsAsync(async () => {
+        await t.context.got.put(`ad/${adId}`, {json: requestBody}),
+        { instanceof: got.HTTPError }
+    });
+    // Assert error status code
+    t.is(error.response.statusCode, 400);
+    // Assert error message
+    t.is(error.response.body.message, "request.body.userID should be integer");
+});
+
+// Test case for show interest in ad with request body / integer values in an array (by sending a HTTP request to the server)
+test("PUT show interest in an ad with request body / integer values in an array ", async t => {
+    // Define path parameters
+    const adId = 0;
+    const requestBody ={
+        "userID": [2, 3]
+        };
+    // Send PUT request to server
+    const error = await t.throwsAsync(async () => {
+        await t.context.got.put(`ad/${adId}`, {json: requestBody}),
+        { instanceof: got.HTTPError }
+    });
+    // Assert error status code
+    t.is(error.response.statusCode, 400);
+    // Assert error message
+    t.is(error.response.body.message, "request.body.userID should be integer");
+});
+
+// Test case for show interest in ad with request body (integer and null values in an array) (by sending a HTTP request to the server)
+test("PUT show interest in an ad with request body (integer and null values in an array)", async t => {
+    // Define path parameters
+    const adId = 0;
+    const requestBody ={
+        "userID": ['userID1', null]
+        };
+    // Send PUT request to server
+    const error = await t.throwsAsync(async () => {
+        await t.context.got.put(`ad/${adId}`, {json: requestBody}),
+        { instanceof: got.HTTPError }
+    });
+    // Assert error status code
+    t.is(error.response.statusCode, 400);
+    // Assert error message
+    t.is(error.response.body.message, "request.body.userID should be integer");
+});
+
+// Test case for show interest in ad with array request body (by sending a HTTP request to the server)
+test("PUT show interest in an ad with array request body ", async t => {
+    // Define path parameters
+    const adId = 0;
+    const requestBody =[{
+        "userID": 9}, 
+        {
+        "userID": 2
+        }];
+    // Send PUT request to server
+    const error = await t.throwsAsync(async () => {
+        await t.context.got.put(`ad/${adId}`, {json: requestBody}),
+        { instanceof: got.HTTPError }
+    });
+    // Assert error status code
+    t.is(error.response.statusCode, 400);
+    // Assert error message
+    t.is(error.response.body.message, "request.body should be object");
+});
+
 //---------DELETE /user/{userid}/ad/{adid}---------
 // Test case for deleting an ad from user account
 test('DELETE an ad from user account', async (t) => {
@@ -217,7 +350,5 @@ test('DELETE an ad from user account - HTTP request', async (t) => {
     t.is(statusCode, 200);
     // Assert that we get the expected body length
     t.is(Object.keys(body).length, 0);
-     
-    // If the request is successful, the test passes
-    t.pass();
+    
   });
