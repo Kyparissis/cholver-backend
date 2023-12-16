@@ -239,7 +239,7 @@ test("POST a new ad | endpoint should error if content type is not JSON", async 
   };
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
-    await t.context.got.post(`user/${userID}/ad`, { postBody }),
+    await t.context.got.post(`user/${userID}/ad`, { body: JSON.stringify(postBody) }),
       { instanceof: got.HTTPError };
   });
   // Assert error status code
