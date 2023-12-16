@@ -420,7 +420,7 @@ test("POST user | calling the function should work successfully", async (t) => {
 });
 
 test("POST user | endpoint should work successfully", async (t) => {
-  const { body, statusCode } = await t.context.got.post(`user`, {
+  const { statusCode } = await t.context.got.post(`user`, {
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
       fullname: "Fullname",
