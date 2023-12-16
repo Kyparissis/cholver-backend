@@ -36,7 +36,7 @@ test.after.always((t) => {
 // -=-=-=-=-=-=-=-=-= GET user/{userID}/ad -=-=-=-=-=-=-=-=-=
 
 // Test GET all ads from specific user (by calling the function)
-test("GET all ads from specific user by function", async (t) => {
+test("GET all ads from specific user | calling the function should work successfully", async (t) => {
   // Define path parameters
   const userID = 6;
   // Call the function
@@ -55,7 +55,7 @@ test("GET all ads from specific user by function", async (t) => {
 });
 
 // Test GET all ads from specific user (by sending a GET request to the server)
-test("GET all ads from specific user", async (t) => {
+test("GET all ads from specific user | endpoint should work successfully", async (t) => {
   // Define path parameters
   const userID = 6;
   // Make GET request to server
@@ -78,7 +78,7 @@ test("GET all ads from specific user", async (t) => {
 // -=-=-=-=-=-=-=-=-= GET user/{userID}/ad/{adID} -=-=-=-=-=-=-=-=-=
 
 // Test GET the interested users for an ad (by calling the function)
-test("GET the interested users for an ad by function", async (t) => {
+test("GET the interested users for an ad | calling the function should work successfully", async (t) => {
   // Define path parameters
   const userID = 6;
   const adID = 1;
@@ -102,7 +102,7 @@ test("GET the interested users for an ad by function", async (t) => {
 });
 
 // Test GET the interested users for an ad (by sending a GET request to the server)
-test("GET the interested users for an ad", async (t) => {
+test("GET the interested users for an ad | endpoint should work successfully", async (t) => {
   // Define path parameters
   const userID = 6;
   const adID = 1;
@@ -132,7 +132,7 @@ test("GET the interested users for an ad", async (t) => {
 // -=-=-=-=-=-=-=-=-= POST user/{userID}/ad -=-=-=-=-=-=-=-=-=
 
 // Test POST a new ad (by calling the function)
-test("POST a new ad by function", async (t) => {
+test("POST a new ad | calling the function should work successfully", async (t) => {
   // Define path parameters
   const userID = 6;
   const body = {
@@ -148,7 +148,7 @@ test("POST a new ad by function", async (t) => {
 });
 
 // Test POST a new ad (by sending a POST request to the server)
-test("POST a new ad", async (t) => {
+test("POST a new ad | endpoint should work successfully", async (t) => {
   // Define path parameters
   const userID = 6;
   const postBody = {
@@ -168,7 +168,7 @@ test("POST a new ad", async (t) => {
 });
 
 // Test POST a new ad | Integer in title in request body (by sending a POST request to the server)
-test("POST a new ad | Integer in title in request body", async (t) => {
+test("POST a new ad | endpoint should error if title is integer", async (t) => {
   // Define path parameters
   const userID = 6;
   const postBody = {
@@ -187,7 +187,7 @@ test("POST a new ad | Integer in title in request body", async (t) => {
 });
 
 // Test POST a new ad | Integer in adDescription in request body (by sending a POST request to the server)
-test("POST a new ad | Integer in adDescription in request body", async (t) => {
+test("POST a new ad | endpoint should error if adDescription is integer", async (t) => {
   // Define path parameters
   const userID = 6;
   const postBody = {
@@ -209,7 +209,7 @@ test("POST a new ad | Integer in adDescription in request body", async (t) => {
 });
 
 // Test POST a new ad | Integer in adDescription,title in request body (by sending a POST request to the server)
-test("POST a new ad | Integer in adDescription,title in request body", async (t) => {
+test("POST a new ad | endpoint should error if adDescription and title are integers", async (t) => {
   // Define path parameters
   const userID = 6;
   const postBody = {
@@ -230,8 +230,7 @@ test("POST a new ad | Integer in adDescription,title in request body", async (t)
   );
 });
 
-// Test POST a new ad | Integer in adDescription,title in request body (by sending a POST request to the server)
-test("POST a new ad | Request body isn't JSON", async (t) => {
+test("POST a new ad | endpoint should error if content type is not JSON", async (t) => {
   // Define path parameters
   const userID = 6;
   const postBody = {
@@ -250,7 +249,7 @@ test("POST a new ad | Request body isn't JSON", async (t) => {
 });
 
 // Test POST a new ad | Multiple titles in request body (by sending a POST request to the server)
-test("POST a new ad | Multiple titles in request body", async (t) => {
+test("POST a new ad | endpoint should error if multiple titles are present", async (t) => {
   // Define path parameters
   const userID = 6;
   const postBody = {
@@ -269,7 +268,7 @@ test("POST a new ad | Multiple titles in request body", async (t) => {
 });
 
 // Test POST a new ad | Multiple titles, adDescriptions in request body (by sending a POST request to the server)
-test("POST a new ad | Multiple titles, adDescriptions in request body", async (t) => {
+test("POST a new ad | endpoint should error if multiple titles and adDescriptions are present", async (t) => {
   // Define path parameters
   const userID = 6;
   const postBody = {
@@ -291,7 +290,7 @@ test("POST a new ad | Multiple titles, adDescriptions in request body", async (t
 });
 
 // Test POST a new ad | Multiple adDescriptions in request body (by sending a POST request to the server)
-test("POST a new ad | Multiple adDescriptions in request body", async (t) => {
+test("POST a new ad | endpoint should error if multiple adDescriptions are present", async (t) => {
   // Define path parameters
   const userID = 6;
   const postBody = {
@@ -312,8 +311,7 @@ test("POST a new ad | Multiple adDescriptions in request body", async (t) => {
   );
 });
 
-// Test POST a new ad | Multiple adDescriptions in request body (by sending a POST request to the server)
-test("POST a new ad | No request body", async (t) => {
+test("POST a new ad | endpoint should error if no request body is passed", async (t) => {
   // Define path parameters
   const userID = 6;
   // Send POST request to server
@@ -328,7 +326,7 @@ test("POST a new ad | No request body", async (t) => {
 });
 
 // Test POST a new ad | No request body (by sending a POST request to the server)
-test("POST a new ad | Undefined as request body", async (t) => {
+test("POST a new ad | endpoint should error if body is undefined", async (t) => {
   // Define path parameters
   const userID = 6;
   // Send POST request to server
@@ -342,8 +340,7 @@ test("POST a new ad | Undefined as request body", async (t) => {
   t.is(error.response.body.message, "unsupported media type undefined");
 });
 
-// Test POST a new ad | No request body (by sending a POST request to the server)
-test("POST a new ad | Null title in request body", async (t) => {
+test("POST a new ad | endpoint should error if title is null", async (t) => {
   // Define path parameters
   const userID = 6;
   const postBody = {
@@ -361,8 +358,7 @@ test("POST a new ad | Null title in request body", async (t) => {
   t.is(error.response.body.message, "request.body.title should be string");
 });
 
-// Test POST a new ad | Null adDescription in request body (by sending a POST request to the server)
-test("POST a new ad | Array of correct bodies request body", async (t) => {
+test("POST a new ad | endpoint should error if request body is an array", async (t) => {
   // Define path parameters
   const userID = 6;
   const postBody = [
@@ -389,7 +385,7 @@ test("POST a new ad | Array of correct bodies request body", async (t) => {
 //-------GET /ad---------
 
 //Test GET all ads by calling the function
-test("GET all ads by function", async (t) => {
+test("GET all ads | calling the function should work successfully", async (t) => {
   //call the function adGET without a keyword
   const result = await adGET();
 
@@ -411,7 +407,7 @@ test("GET all ads by function", async (t) => {
 });
 
 //Test GET search for ads by keyword by calling the function
-test("GET search for ads by keyword by function", async (t) => {
+test("GET search for ads by keyword | calling the function should work successfully", async (t) => {
   //define a keyword for searching ads
   const keyword = "title"; //dumm keyword cause doesn't exist a database, just to run true
 
@@ -443,7 +439,7 @@ test("GET search for ads by keyword by function", async (t) => {
 });
 
 //Test GET all ads by sending a GET request to the server
-test("GET all ads by sending a HTTP request", async (t) => {
+test("GET all ads | endpoint should work successfully", async (t) => {
   //call server without keyword
   const { body, statusCode } = await t.context.got.get(`ad`);
 
@@ -464,7 +460,7 @@ test("GET all ads by sending a HTTP request", async (t) => {
 });
 
 //Test GET search ad by keyword by sending a GET request to the server
-test("GET searching ads by keyword by sending a HTTP request", async (t) => {
+test("GET search for ads by keyword | endpoint should work successfully", async (t) => {
   //define parameter
   const keyword = "title";
   //call server with keyword
@@ -487,7 +483,7 @@ test("GET searching ads by keyword by sending a HTTP request", async (t) => {
 });
 
 //Test case for searching ads by keyword with null keyword (by sending a HTTP request to the server)
-test("GET searching ads by null keyword by sending a HTTP request", async (t) => {
+test("GET search for ads | endpoint should error if keyword is null", async (t) => {
   //define parameter
   const keyword = null;
 
@@ -512,7 +508,7 @@ test("GET searching ads by null keyword by sending a HTTP request", async (t) =>
 //---------PUT /ad/{adid}----------
 //Show interest in an ad
 // Test case for showing interest in an ad by calling the function
-test("PUT interest in an ad", async (t) => {
+test("PUT interest in an ad | calling the function should work successfully", async (t) => {
   //define parameters
   const adId = 0;
 
@@ -540,7 +536,7 @@ test("PUT interest in an ad", async (t) => {
 });
 
 //Test case for making a HTTP request
-test("PUT interest in an ad - HTTP request", async (t) => {
+test("PUT interest in an ad | endpoint should work successfully", async (t) => {
   //define parameters
   const adId = 0;
 
@@ -569,7 +565,7 @@ test("PUT interest in an ad - HTTP request", async (t) => {
 });
 
 // Test case for show interest in ad with undefined request body (by sending a HTTP request to the server)
-test("PUT show interest in an ad with undefined request body", async (t) => {
+test("PUT show interest in an ad | endpoint should error if request body is undefined", async (t) => {
   // Define path parameters
   const adId = 0;
   // Send PUT request to server
@@ -584,7 +580,7 @@ test("PUT show interest in an ad with undefined request body", async (t) => {
 });
 
 // Test case for show interest in ad with null request body (by sending a HTTP request to the server)
-test("PUT show interest in an ad with null request body", async (t) => {
+test("PUT show interest in an ad | endpoint should error if userID is null", async (t) => {
   // Define path parameters
   const adId = 0;
   const requestBody = {
@@ -602,7 +598,7 @@ test("PUT show interest in an ad with null request body", async (t) => {
 });
 
 // Test case for show interest in ad with string request body (by sending a HTTP request to the server)
-test("PUT show interest in an ad with string request body", async (t) => {
+test("PUT show interest in an ad | endpoint should error if userID is string", async (t) => {
   // Define path parameters
   const adId = 0;
   const requestBody = {
@@ -620,7 +616,7 @@ test("PUT show interest in an ad with string request body", async (t) => {
 });
 
 // Test case for show interest in ad with request body / string values in an array (by sending a HTTP request to the server)
-test("PUT show interest in an ad with request body  / string values in an array ", async (t) => {
+test("PUT show interest in an ad | endpoint should error if userID is array of strings", async (t) => {
   // Define path parameters
   const adId = 0;
   const requestBody = {
@@ -638,7 +634,7 @@ test("PUT show interest in an ad with request body  / string values in an array 
 });
 
 // Test case for show interest in ad with request body / integer values in an array (by sending a HTTP request to the server)
-test("PUT show interest in an ad with request body / integer values in an array ", async (t) => {
+test("PUT show interest in an ad | endpoint should error if userID is array of integers", async (t) => {
   // Define path parameters
   const adId = 0;
   const requestBody = {
@@ -656,7 +652,7 @@ test("PUT show interest in an ad with request body / integer values in an array 
 });
 
 // Test case for show interest in ad with request body (integer and null values in an array) (by sending a HTTP request to the server)
-test("PUT show interest in an ad with request body (integer and null values in an array)", async (t) => {
+test("PUT show interest in an ad | endpoint should error if userID has string and null", async (t) => {
   // Define path parameters
   const adId = 0;
   const requestBody = {
@@ -674,7 +670,7 @@ test("PUT show interest in an ad with request body (integer and null values in a
 });
 
 // Test case for show interest in ad with array request body (by sending a HTTP request to the server)
-test("PUT show interest in an ad with array request body ", async (t) => {
+test("PUT show interest in an ad | endpoint should error if body is an array", async (t) => {
   // Define path parameters
   const adId = 0;
   const requestBody = [
@@ -698,7 +694,7 @@ test("PUT show interest in an ad with array request body ", async (t) => {
 
 //---------DELETE /user/{userid}/ad/{adid}---------
 // Test case for deleting an ad from user account
-test("DELETE an ad from user account", async (t) => {
+test("DELETE an ad from user account | calling the function should work successfully", async (t) => {
   //define parameters
   const userID = 6;
   const adID = 0;
@@ -711,7 +707,7 @@ test("DELETE an ad from user account", async (t) => {
 });
 
 // Test case for making a HTTP request
-test("DELETE an ad from user account - HTTP request", async (t) => {
+test("DELETE an ad from user account | endpoint should work successfully", async (t) => {
   //define parameters
   const userID = 6;
   const adID = 0;

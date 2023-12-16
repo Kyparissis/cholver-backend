@@ -28,7 +28,7 @@ test.after.always((t) => {
   t.context.server.close();
 });
 
-test("Delete User function works successfully", async (t) => {
+test("Delete User | calling the function should work successfully", async (t) => {
   const userId = 1;
   const user = await userUserIDDELETE(userId);
   t.is(user.userDescription, "userDescription");
@@ -43,7 +43,7 @@ test("Delete User function works successfully", async (t) => {
   t.is(user.age, 6);
 });
 
-test("Delete User responds with status code 200", async (t) => {
+test("Delete User | endpoint should work successfully", async (t) => {
   const userId = 1;
   const { body, statusCode } = await t.context.got.delete(`user/${userId}`);
   t.is(statusCode, 200);
@@ -60,13 +60,13 @@ test("Delete User responds with status code 200", async (t) => {
   t.is(body.age, 6);
 });
 
-test("Upload Profile Picture function works successfully", async (t) => {
+test("Upload Profile Picture | calling the function should work successfully", async (t) => {
   const userId = 1;
   const response = await userUserIDProfile_picturePUT(userId);
   t.is(response.message, "Picture uploaded successfully");
 });
 
-test("Upload Profile Picture responds with status code 200", async (t) => {
+test("Upload Profile Picture | endpoint should work successfully", async (t) => {
   const userId = 1;
 
   const formData = new FormData();
@@ -86,7 +86,7 @@ test("Upload Profile Picture responds with status code 200", async (t) => {
   t.is(body.message, "Picture uploaded successfully");
 });
 
-test("Upload Profile Picture responds with status code 415 if no file is passed", async (t) => {
+test("Upload Profile Picture | endpoint should error if no file is passed", async (t) => {
   const userId = 1;
 
   const error = await t.throwsAsync(async () => {
@@ -98,7 +98,7 @@ test("Upload Profile Picture responds with status code 415 if no file is passed"
 
 //_________GET/user_________________________
 //Test function
-test("GET users by keyword (function)", async (t) => {
+test("GET users by keyword | calling the function should work successfully", async (t) => {
   const keyword = "keyword";
   const result = await userGET(keyword);
   const randUser = result[1];
@@ -120,7 +120,7 @@ test("GET users by keyword (function)", async (t) => {
 });
 
 //Test Server
-test("GET users by keyword (status code 200)", async (t) => {
+test("GET users by keyword | endpoint should work successfully", async (t) => {
   const keyword = "keyword";
   const { body, statusCode } = await t.context.got.get(
     `user?keyword=${keyword}`,
@@ -144,7 +144,7 @@ test("GET users by keyword (status code 200)", async (t) => {
 
 // Testing unhappy paths
 // 1. Wrong data type of keyword (400)
-test("GET users by keyword | Keyword is null", async (t) => {
+test("GET users by keyword | endpoint should error if keyword is null", async (t) => {
   const keyword = null; // keyword is integer instead of string
   const error = await t.throwsAsync(async () => {
     await t.context.got.get("user", {
@@ -164,7 +164,7 @@ test("GET users by keyword | Keyword is null", async (t) => {
 
 //___________PUT/user/{userID}______________
 //Test function
-test("PUT user information (function)", async (t) => {
+test("PUT user information | calling the function should work successfully", async (t) => {
   const userID = 1;
   const body = {
     userDescription: "string",
@@ -193,7 +193,7 @@ test("PUT user information (function)", async (t) => {
 });
 
 //Test Server
-test("PUT user information (status code 200)", async (t) => {
+test("PUT user information | endpoint should work successfully", async (t) => {
   const userID = 1;
   const requestBody = {
     userDescription: "string",
@@ -230,7 +230,7 @@ test("PUT user information (status code 200)", async (t) => {
 
 // Testing unhappy paths
 // 1. undefined request body (400)
-test("PUT user information | Undefined request body (userDescription is integer)", async (t) => {
+test("PUT user information | endpoint should error if userDescription is integer", async (t) => {
   const userID = 1;
   const putBody = {
     userDescription: 12345, // it is integer instead of string
@@ -258,7 +258,7 @@ test("PUT user information | Undefined request body (userDescription is integer)
 });
 
 // 2. undefined request body (400)
-test("PUT user information | Undefined request body (gender is null)", async (t) => {
+test("PUT user information | endpoint should error if gender is null", async (t) => {
   const userID = 1;
   const putBody = {
     userDescription: "12345",
@@ -283,7 +283,7 @@ test("PUT user information | Undefined request body (gender is null)", async (t)
 });
 
 // 3. Missing request body (415)
-test("PUT user information | Missing request body", async (t) => {
+test("PUT user information | endpoint should error if request body is missing", async (t) => {
   const userID = 1;
   const error = await t.throwsAsync(async () => {
     await t.context.got.put(`user/${userID}`), { instanceof: got.HTTPError };
@@ -294,7 +294,7 @@ test("PUT user information | Missing request body", async (t) => {
 });
 
 // 4. Multiple times fullname given in request body (400)
-test("PUT user information | undefined request body - multiple fullnames given", async (t) => {
+test("PUT user information | endpoint should error if multiple fullnames given", async (t) => {
   const userID = 1;
   const body = {
     userDescription: "string",
@@ -318,7 +318,7 @@ test("PUT user information | undefined request body - multiple fullnames given",
 });
 
 // 5. undefined request body (400)
-test("PUT user information | Undefined request body (userDescription,city and fullname are integer)", async (t) => {
+test("PUT user information | endpoint should error if userDescription, city and fullname are integers", async (t) => {
   const userID = 1;
   const putBody = {
     userDescription: 12345, // it is integer instead of string
@@ -346,7 +346,7 @@ test("PUT user information | Undefined request body (userDescription,city and fu
 });
 
 // 6. undefined request body (400)
-test("PUT user information | Undefined request body (gender is null and rating is string)", async (t) => {
+test("PUT user information | endpoint should error if gender is null and rating is string", async (t) => {
   const userID = 1;
   const putBody = {
     userDescription: "12345",
@@ -374,7 +374,7 @@ test("PUT user information | Undefined request body (gender is null and rating i
 });
 
 // 7. Multiple times fullname and rating given in request body (400)
-test("PUT user information | undefined request body - multiple fullnames given and ratings", async (t) => {
+test("PUT user information | endpoint should error if multiple fullnames and ratings are given", async (t) => {
   const userID = 1;
   const body = {
     userDescription: "string",
@@ -404,7 +404,7 @@ test("PUT user information | undefined request body - multiple fullnames given a
 
 // Server Tests
 
-test("userPOST function works successfully", async (t) => {
+test("POST user | calling the function should work successfully", async (t) => {
   const body = {
     fullname: "Fullname",
     email: "email@gmail.com",
@@ -419,7 +419,7 @@ test("userPOST function works successfully", async (t) => {
   t.pass();
 });
 
-test("POST/user responds with status code 200", async (t) => {
+test("POST user | endpoint should work successfully", async (t) => {
   const { body, statusCode } = await t.context.got.post(`user`, {
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
@@ -438,7 +438,7 @@ test("POST/user responds with status code 200", async (t) => {
 
 // Undefined Request Body (400)
 
-test("POST/user responds with status code 400 if fullname is not a string", async (t) => {
+test("POST user | endpoint should error if fullname is not a string", async (t) => {
   const body = {
     fullname: 3243234323432,
     email: "email@gmail.com",
@@ -456,7 +456,7 @@ test("POST/user responds with status code 400 if fullname is not a string", asyn
   t.is(error.response.body.message, "request.body.fullname should be string");
 });
 
-test("POST/user responds with status code 400 if email is not a string", async (t) => {
+test("POST user | endpoint should error if email is not a string", async (t) => {
   const body = {
     fullname: "Fullname",
     email: 987567,
@@ -474,7 +474,7 @@ test("POST/user responds with status code 400 if email is not a string", async (
   t.is(error.response.body.message, "request.body.email should be string");
 });
 
-test("POST/user responds with status code 400 if age is not an integer", async (t) => {
+test("POST user | endpoint should error if age is not an integer", async (t) => {
   const body = {
     fullname: "Fullname",
     email: "email@gmail.com",
@@ -492,7 +492,7 @@ test("POST/user responds with status code 400 if age is not an integer", async (
   t.is(error.response.body.message, "request.body.age should be integer");
 });
 
-test("POST/user responds with status code 400 if phone is not a string", async (t) => {
+test("POST user | endpoint should error if phone is not a string", async (t) => {
   const body = {
     fullname: "Fullname",
     email: "email@gmail.com",
@@ -510,7 +510,7 @@ test("POST/user responds with status code 400 if phone is not a string", async (
   t.is(error.response.body.message, "request.body.phone should be string");
 });
 
-test("POST/user responds status code 400 if undefined request body is given (gender = null)", async (t) => {
+test("POST user | endpoint should error if gender is null", async (t) => {
   const requestBody = {
     fullname: "string",
     email: "string",
@@ -535,7 +535,7 @@ test("POST/user responds status code 400 if undefined request body is given (gen
 
 // Server Tests
 
-test("userUserIDGET function works successfully", async (t) => {
+test("GET user by userID | calling the function should work successfully", async (t) => {
   const userId = 0;
   const result = await userUserIDGET(userId);
   const randUser = result;
@@ -551,7 +551,7 @@ test("userUserIDGET function works successfully", async (t) => {
   t.is(randUser.age, 6);
 });
 
-test("GET/user/{userID} responds with status code 200", async (t) => {
+test("GET user by userID | endpoint should work successfully", async (t) => {
   const userId = 0;
   const { body, statusCode } = await t.context.got.get(`user/${userId}`);
   t.is(statusCode, 200);

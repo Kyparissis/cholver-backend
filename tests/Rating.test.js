@@ -18,14 +18,14 @@ test.after.always((t) => {
   t.context.server.close();
 });
 
-test("Rate User function works successfully", async (t) => {
+test("PUT Rate User | calling the function should work successfully", async (t) => {
   const body = { raterUserID: 3, rating: 2 };
   const userId = 1;
   await userUserIDRatePUT(body, userId);
   t.pass();
 });
 
-test("Rate User responds with status code 200", async (t) => {
+test("PUT Rate User | endpoint should work successfully", async (t) => {
   const userId = 1;
   const { statusCode } = await t.context.got.put(`user/${userId}/rate`, {
     headers: { "content-type": "application/json" },
@@ -34,7 +34,7 @@ test("Rate User responds with status code 200", async (t) => {
   t.is(statusCode, 200);
 });
 
-test("Rate User responds with status code 415 if content type is not json", async (t) => {
+test("PUT Rate User | endpoint should error if content type is not json", async (t) => {
   const userId = 1;
   const error = await t.throwsAsync(async () => {
     await t.context.got.put(`user/${userId}/rate`, {
