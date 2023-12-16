@@ -27,7 +27,7 @@ test("Rate User function works successfully", async (t) => {
 
 test("Rate User responds with status code 200", async (t) => {
   const userId = 1;
-  const { body, statusCode } = await t.context.got.put(`user/${userId}/rate`, {
+  const { statusCode } = await t.context.got.put(`user/${userId}/rate`, {
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ raterUserID: 3, rating: 2 }),
   });

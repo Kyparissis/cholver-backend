@@ -430,7 +430,7 @@ test("userPOST function works successfully", async (t) => {
     gender: "Gender",
     profilePic: "ProfilePic",
   };
-  const result = await userPOST(body);
+  await userPOST(body);
   t.pass();
 });
 
