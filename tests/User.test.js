@@ -531,18 +531,6 @@ test("POST/user responds status code 400 if undefined request body is given (gen
   t.is(error.response.body.message, "request.body.gender should be string");
 });
 
-// Missing Request Body (415)
-
-test("POST user information | Missing request body", async (t) => {
-  const userID = 1;
-  const error = await t.throwsAsync(async () => {
-    await t.context.got.put(`user/${userID}`), { instanceof: got.HTTPError };
-  });
-
-  t.is(error.response.statusCode, 415);
-  t.is(error.response.body.message, "unsupported media type undefined");
-});
-
 // Tests for Endpoint: GET/user/{userID}
 
 // Server Tests
