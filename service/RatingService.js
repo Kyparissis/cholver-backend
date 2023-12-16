@@ -1,17 +1,15 @@
-'use strict';
-
+"use strict";
 
 /**
  * Give a rating to a user
- * FR11 - The user must be able to rate other users. 
+ * FR11 - The user must be able to rate other users.
  *
- * body UserID_rate_body 
- * userID String 
+ * body UserID_rate_body
+ * userID String
  * no response value expected for this operation
  **/
-exports.userUserIDRatePUT = function(body,userID) {
-  return new Promise(function(resolve, reject) {
+exports.userUserIDRatePUT = function (body, userID) {
+  return new Promise(function (resolve, reject) {
     resolve();
   });
-}
-
+};
