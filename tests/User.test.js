@@ -400,21 +400,6 @@ test("PUT user information | undefined request body - multiple fullnames given a
   );
 });
 
-// Initializaiton of Server
-
-test.before(async (t) => {
-  t.context.server = http.createServer(app);
-  t.context.prefixUrl = await listen(t.context.server);
-  t.context.got = got.extend({
-    prefixUrl: t.context.prefixUrl,
-    responseType: "json",
-  });
-});
-
-test.after.always((t) => {
-  t.context.server.close();
-});
-
 // Tests for Endpoint: POST/user
 
 // Server Tests
