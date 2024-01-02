@@ -1,9 +1,15 @@
-'use strict';
+"use strict";
 
-var utils = require('../utils/writer.js');
-var Rating = require('../service/RatingService');
+var utils = require("../utils/writer.js");
+var Rating = require("../service/RatingService");
 
-module.exports.userUserIDRatePUT = function userUserIDRatePUT (req, res, next, body, userID) {
+module.exports.userUserIDRatePUT = function userUserIDRatePUT(
+  req,
+  res,
+  next,
+  body,
+  userID,
+) {
   Rating.userUserIDRatePUT(body, userID)
     .then(function (response) {
       utils.writeJson(res, response);
