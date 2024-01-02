@@ -1,4 +1,9 @@
-"use strict";
+'use strict';
+
+const { sampleUserList } = require('../fixtures/sampleUserList');
+const { sampleAdList } = require('../fixtures/sampleAdList');
+const { sampleAdListWithUsers } = require('../fixtures/sampleAdListWithUsers');
+const { sampleAd } = require('../fixtures/sampleAd');
 
 /**
  * Show interest in an ad
@@ -11,14 +16,7 @@
 exports.adAdIDPUT = function (body, adID) {
   return new Promise(function (resolve, reject) {
     var examples = {};
-    examples["application/json"] = {
-      adDescription: "adDescription",
-      date: "date",
-      adID: 0,
-      city: "city",
-      title: "title",
-      userID: 6,
-    };
+    examples['application/json'] = sampleAd;
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -37,36 +35,7 @@ exports.adAdIDPUT = function (body, adID) {
 exports.adGET = function (keyword) {
   return new Promise(function (resolve, reject) {
     var examples = {};
-    examples["application/json"] = [
-      {
-        adDescription: "adDescription",
-        date: "date",
-        adID: 0,
-        city: "city",
-        title: "title",
-        userID: 6,
-        user: {
-          profilePic: "",
-          rating: 5.962133916683182,
-          fullname: "fullname",
-          userID: 1,
-        },
-      },
-      {
-        adDescription: "adDescription",
-        date: "date",
-        adID: 0,
-        city: "city",
-        title: "title",
-        userID: 6,
-        user: {
-          profilePic: "",
-          rating: 5.962133916683182,
-          fullname: "fullname",
-          userID: 1,
-        },
-      },
-    ];
+    examples['application/json'] = sampleAdListWithUsers;
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -100,32 +69,7 @@ exports.userUserIDAdAdIDDELETE = function (userID, adID) {
 exports.userUserIDAdAdIDGET = function (userID, adID) {
   return new Promise(function (resolve, reject) {
     var examples = {};
-    examples["application/json"] = [
-      {
-        userDescription: "userDescription",
-        gender: "gender",
-        city: "city",
-        phone: "phone",
-        profilePic: "",
-        rating: 1,
-        fullname: "fullname",
-        userID: 0,
-        email: "email",
-        age: 6,
-      },
-      {
-        userDescription: "userDescription",
-        gender: "gender",
-        city: "city",
-        phone: "phone",
-        profilePic: "",
-        rating: 1,
-        fullname: "fullname",
-        userID: 0,
-        email: "email",
-        age: 6,
-      },
-    ];
+    examples['application/json'] = sampleUserList;
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -144,24 +88,7 @@ exports.userUserIDAdAdIDGET = function (userID, adID) {
 exports.userUserIDAdGET = function (userID) {
   return new Promise(function (resolve, reject) {
     var examples = {};
-    examples["application/json"] = [
-      {
-        adDescription: "adDescription",
-        date: "date",
-        adID: 0,
-        city: "city",
-        title: "title",
-        userID: 6,
-      },
-      {
-        adDescription: "adDescription",
-        date: "date",
-        adID: 0,
-        city: "city",
-        title: "title",
-        userID: 6,
-      },
-    ];
+    examples['application/json'] = sampleAdList;
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -181,8 +108,8 @@ exports.userUserIDAdGET = function (userID) {
 exports.userUserIDAdPOST = function (body, userID) {
   return new Promise(function (resolve, reject) {
     var examples = {};
-    examples["application/json"] = {
-      message: "message",
+    examples['application/json'] = {
+      message: 'message',
     };
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
