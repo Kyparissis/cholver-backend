@@ -1,5 +1,8 @@
 "use strict";
 
+const { sampleUserList } = require('../fixtures/sampleUserList');
+const { sampleUser } = require('../fixtures/sampleUser');
+
 /**
  * Search for users by keyword
  * FR9 - The user must be able to search for other users' profiles.
@@ -10,32 +13,7 @@
 exports.userGET = function (keyword) {
   return new Promise(function (resolve, reject) {
     var examples = {};
-    examples["application/json"] = [
-      {
-        userDescription: "userDescription",
-        gender: "gender",
-        city: "city",
-        phone: "phone",
-        profilePic: "",
-        rating: 1,
-        fullname: "fullname",
-        userID: 0,
-        email: "email",
-        age: 6,
-      },
-      {
-        userDescription: "userDescription",
-        gender: "gender",
-        city: "city",
-        phone: "phone",
-        profilePic: "",
-        rating: 1,
-        fullname: "fullname",
-        userID: 0,
-        email: "email",
-        age: 6,
-      },
-    ];
+    examples['application/json'] = sampleUserList;
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -67,18 +45,7 @@ exports.userPOST = function (body) {
 exports.userUserIDDELETE = function (userID) {
   return new Promise(function (resolve, reject) {
     var examples = {};
-    examples["application/json"] = {
-      userDescription: "userDescription",
-      gender: "gender",
-      city: "city",
-      phone: "phone",
-      profilePic: "",
-      rating: 1,
-      fullname: "fullname",
-      userID: 0,
-      email: "email",
-      age: 6,
-    };
+    examples['application/json'] = sampleUser;
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -97,18 +64,7 @@ exports.userUserIDDELETE = function (userID) {
 exports.userUserIDGET = function (userID) {
   return new Promise(function (resolve, reject) {
     var examples = {};
-    examples["application/json"] = {
-      userDescription: "userDescription",
-      gender: "gender",
-      city: "city",
-      phone: "phone",
-      profilePic: "",
-      rating: 1,
-      fullname: "fullname",
-      userID: 0,
-      email: "email",
-      age: 6,
-    };
+    examples['application/json'] = sampleUser;
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -128,18 +84,7 @@ exports.userUserIDGET = function (userID) {
 exports.userUserIDPUT = function (body, userID) {
   return new Promise(function (resolve, reject) {
     var examples = {};
-    examples["application/json"] = {
-      userDescription: "userDescription",
-      gender: "gender",
-      city: "city",
-      phone: "phone",
-      profilePic: "",
-      rating: 1,
-      fullname: "fullname",
-      userID: 0,
-      email: "email",
-      age: 6,
-    };
+    examples['application/json'] = sampleUser;
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
