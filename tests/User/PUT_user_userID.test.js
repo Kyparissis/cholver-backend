@@ -4,16 +4,8 @@ const listen = require("test-listen");
 const got = require("got");
 const app = require("../../index.js");
 const {
-  userUserIDDELETE,
-  userUserIDProfile_picturePUT,
-  userPOST,
-  userUserIDGET,
-  userGET,
   userUserIDPUT,
 } = require("../../service/UserService.js");
-const { FormData, File } = require("formdata-node");
-const { FormDataEncoder } = require("form-data-encoder");
-const { Readable } = require("stream");
 
 test.before(async (t) => {
   t.context.server = http.createServer(app);
@@ -81,7 +73,6 @@ test("PUT user information | endpoint should work successfully", async (t) => {
 
   t.is(statusCode, 200);
 
-  const randUser = body[0];
 
   t.is(body.userDescription, "userDescription");
   t.is(body.gender, "gender");

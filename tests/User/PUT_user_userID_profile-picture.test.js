@@ -4,12 +4,7 @@ const listen = require("test-listen");
 const got = require("got");
 const app = require("../../index.js");
 const {
-  userUserIDDELETE,
   userUserIDProfile_picturePUT,
-  userPOST,
-  userUserIDGET,
-  userGET,
-  userUserIDPUT,
 } = require("../../service/UserService.js");
 const { FormData, File } = require("formdata-node");
 const { FormDataEncoder } = require("form-data-encoder");
