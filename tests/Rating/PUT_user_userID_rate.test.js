@@ -2,8 +2,8 @@ const http = require("http");
 const test = require("ava");
 const listen = require("test-listen");
 const got = require("got");
-const app = require("../index.js");
-const { userUserIDRatePUT } = require("../service/RatingService.js");
+const app = require("../../index.js");
+const { userUserIDRatePUT } = require("../../service/RatingService.js");
 
 test.before(async (t) => {
   t.context.server = http.createServer(app);
