@@ -28,14 +28,12 @@ test.after.always((t) => {
   t.context.server.close();
 });
 
+// --------- PUT /ad/{adid} ----------
 
-
-
-//---------PUT /ad/{adid}----------
-//Show interest in an ad
+// Show interest in an ad
 // Test case for showing interest in an ad by calling the function
 test("PUT interest in an ad | calling the function should work successfully", async (t) => {
-  //define parameters
+  // Define parameters
   const adId = 0;
 
   // define request body for showing interest in an ad
@@ -61,9 +59,9 @@ test("PUT interest in an ad | calling the function should work successfully", as
   t.is(result.userID, 6);
 });
 
-//Test case for making a HTTP request
+// Test case for making a HTTP request
 test("PUT interest in an ad | endpoint should work successfully", async (t) => {
-  //define parameters
+  // Define parameters
   const adId = 0;
 
   // define request body for showing interest in an ad

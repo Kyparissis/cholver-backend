@@ -28,8 +28,6 @@ test.after.always((t) => {
   t.context.server.close();
 });
 
-
-
 // -=-=-=-=-=-=-=-=-= GET user/{userID}/ad -=-=-=-=-=-=-=-=-=
 
 // Test GET all ads from specific user (by calling the function)
