@@ -9,11 +9,6 @@ const app = require("../../index.js");
 
 // Import functions from AdService that we want to test
 const {
-  userUserIDAdGET,
-  userUserIDAdAdIDGET,
-  userUserIDAdPOST,
-  adGET,
-  userUserIDAdAdIDDELETE,
   adAdIDPUT,
 } = require("../../service/AdService.js");
 
