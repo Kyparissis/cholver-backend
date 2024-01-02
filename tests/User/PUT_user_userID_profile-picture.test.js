@@ -6,9 +6,7 @@ const app = require("../../index.js");
 const {
   userUserIDProfile_picturePUT,
 } = require("../../service/UserService.js");
-const { FormData, File } = require("formdata-node");
-const { FormDataEncoder } = require("form-data-encoder");
-const { Readable } = require("stream");
+const { getFormDataDetails } = require('../../utils/formDataUtils.js');
 
 test.before(async (t) => {
   t.context.server = http.createServer(app);
@@ -33,19 +31,16 @@ test("Upload Profile Picture | calling the function should work successfully", a
 test("Upload Profile Picture | endpoint should work successfully", async (t) => {
   const userId = 1;
 
-  const formData = new FormData();
-  const file = new File(["example content"], "profilePicture.png");
-  formData.set("file", file);
+  const { requestBody, requestHeaders } = getFormDataDetails({
+    formDataFieldName: 'file',
+    fileContent: 'example content',
+    fileName: 'profilePicture.png',
+  });
 
-  const encoder = new FormDataEncoder(formData);
-
-  const { body, statusCode } = await t.context.got.put(
-    `user/${userId}/profile-picture`,
-    {
-      body: Readable.from(encoder.encode()),
-      headers: encoder.headers,
-    },
-  );
+  const { body, statusCode } = await t.context.got.put(`user/${userId}/profile-picture`, {
+    body: requestBody,
+    headers: requestHeaders,
+  });
   t.is(statusCode, 200);
   t.is(body.message, "Picture uploaded successfully");
 });
