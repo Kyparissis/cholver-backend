@@ -30,16 +30,16 @@ test.after.always((t) => {
 
 
 
-//-------GET /ad---------
+// -------GET /ad---------
 
-//Test GET all ads by calling the function
+// Test GET all ads by calling the function
 test("GET all ads | calling the function should work successfully", async (t) => {
   //call the function adGET without a keyword
   const result = await adGET();
 
+  // ASSERTIONS
   // Assert that the result is an array
   t.true(Array.isArray(result));
-
   // Assert that we get two entries
   t.is(result.length, 2);
   // Get the second of the entries
@@ -54,24 +54,23 @@ test("GET all ads | calling the function should work successfully", async (t) =>
   t.is(ad.user.fullname, "fullname");
 });
 
-//Test GET search for ads by keyword by calling the function
+// Test GET search for ads by keyword by calling the function
 test("GET search for ads by keyword | calling the function should work successfully", async (t) => {
-  //define a keyword for searching ads
+  // define a keyword for searching ads
   const keyword = "title"; //dumm keyword cause doesn't exist a database, just to run true
-
-  //call the function adGET with the keyword
+  
+  // call the function adGET with the keyword
   const result = await adGET(keyword);
 
+  // ASSERTIONS
   // Assert that the result is an array
   t.true(Array.isArray(result));
-
   // Assert that all ads in the result match the keyword (customize based on your ad structure)
   t.true(
     result.every(
       (ad) => ad.title.includes(keyword) || ad.adDescription.includes(keyword),
     ),
   );
-
   // Assert that we get two entries
   t.is(result.length, 2);
   // Get the second of the entries
@@ -86,14 +85,14 @@ test("GET search for ads by keyword | calling the function should work successfu
   t.is(ad.user.fullname, "fullname");
 });
 
-//Test GET all ads by sending a GET request to the server
+// Test GET all ads by sending a GET request to the server
 test("GET all ads | endpoint should work successfully", async (t) => {
-  //call server without keyword
+  // call server without keyword
   const { body, statusCode } = await t.context.got.get(`ad`);
 
+  // ASSERTIONS
   // Assert success status code
   t.is(statusCode, 200);
-
   // Assert that we get two entries (body must be an array)
   t.is(body.length, 2);
   // Get the first of the entries of the body
@@ -107,16 +106,17 @@ test("GET all ads | endpoint should work successfully", async (t) => {
   t.is(firstAd.userID, 6);
 });
 
-//Test GET search ad by keyword by sending a GET request to the server
+// Test GET search ad by keyword by sending a GET request to the server
 test("GET search for ads by keyword | endpoint should work successfully", async (t) => {
-  //define parameter
+  // Define parameter
   const keyword = "title";
-  //call server with keyword
+
+  // Call server with keyword
   const { body, statusCode } = await t.context.got.get(`ad?keyword=${keyword}`);
 
+  // ASSERTIONS
   // Assert success status code
   t.is(statusCode, 200);
-
   // Assert that we get two entries (body must be an array)
   t.is(body.length, 2);
   // Get the first of the entries of the body
@@ -130,9 +130,9 @@ test("GET search for ads by keyword | endpoint should work successfully", async 
   t.is(firstAd.userID, 6);
 });
 
-//Test case for searching ads by keyword with null keyword (by sending a HTTP request to the server)
+// Test case for searching ads by keyword with null keyword (by sending a HTTP request to the server)
 test("GET search for ads | endpoint should error if keyword is null", async (t) => {
-  //define parameter
+  // define parameter
   const keyword = null;
 
   // Send GET request to server
@@ -144,11 +144,10 @@ test("GET search for ads | endpoint should error if keyword is null", async (t) 
     }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
-  t.is(
-    error.response.body.message,
-    "Empty value found for query parameter 'keyword'",
-  );
+  t.is(error.response.body.message, "Empty value found for query parameter 'keyword'");
 });

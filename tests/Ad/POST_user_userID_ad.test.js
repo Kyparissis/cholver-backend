@@ -40,8 +40,11 @@ test("POST a new ad | calling the function should work successfully", async (t) 
     title: "string",
     adDescription: "string",
   };
+
   // Call the function
   const result = await userUserIDAdPOST(body, userID);
+
+  // ASSERTIONS
   // Assert that we get the expected body length
   t.is(Object.keys(result).length, 1);
   // Assert that we get the expected body
@@ -56,10 +59,13 @@ test("POST a new ad | endpoint should work successfully", async (t) => {
     title: "string",
     adDescription: "string",
   };
+
   // Send POST request to server
   const { body, statusCode } = await t.context.got.post(`user/${userID}/ad`, {
     json: postBody,
   });
+
+  // ASSERTIONS
   // Assert success status code
   t.is(statusCode, 200);
   // Assert that we get the expected body length
@@ -76,11 +82,14 @@ test("POST a new ad | endpoint should error if title is integer", async (t) => {
     title: 313131231,
     adDescription: "string",
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
@@ -95,18 +104,18 @@ test("POST a new ad | endpoint should error if adDescription is integer", async 
     title: "string",
     adDescription: 31313123131,
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
-  t.is(
-    error.response.body.message,
-    "request.body.adDescription should be string",
-  );
+  t.is(error.response.body.message, "request.body.adDescription should be string");
 });
 
 // Test POST a new ad | Integer in adDescription,title in request body (by sending a POST request to the server)
@@ -117,20 +126,21 @@ test("POST a new ad | endpoint should error if adDescription and title are integ
     title: 131312313131,
     adDescription: 31313123131,
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
-  t.is(
-    error.response.body.message,
-    "request.body.title should be string, request.body.adDescription should be string",
-  );
+  t.is(error.response.body.message, "request.body.title should be string, request.body.adDescription should be string");
 });
 
+// Test POST a new ad | No JSON request body (by sending a POST request to the server) 
 test("POST a new ad | endpoint should error if content type is not JSON", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -138,11 +148,14 @@ test("POST a new ad | endpoint should error if content type is not JSON", async 
     title: "string",
     adDescription: "string",
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { body: JSON.stringify(postBody) }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 415);
   // Assert error message
@@ -157,11 +170,14 @@ test("POST a new ad | endpoint should error if multiple titles are present", asy
     title: ["string", "string2"],
     adDescription: "string",
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
@@ -176,18 +192,18 @@ test("POST a new ad | endpoint should error if multiple titles and adDescription
     title: ["string", "string2"],
     adDescription: ["string", "string2"],
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
-  t.is(
-    error.response.body.message,
-    "request.body.title should be string, request.body.adDescription should be string",
-  );
+  t.is(error.response.body.message, "request.body.title should be string, request.body.adDescription should be string");
 });
 
 // Test POST a new ad | Multiple adDescriptions in request body (by sending a POST request to the server)
@@ -198,28 +214,32 @@ test("POST a new ad | endpoint should error if multiple adDescriptions are prese
     title: "string",
     adDescription: ["string", "string2"],
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
-  t.is(
-    error.response.body.message,
-    "request.body.adDescription should be string",
-  );
+  t.is(error.response.body.message, "request.body.adDescription should be string");
 });
 
+// Test POST a new ad | No request body (by sending a POST request to the server)
 test("POST a new ad | endpoint should error if no request body is passed", async (t) => {
   // Define path parameters
   const userID = 6;
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 415);
   // Assert error message
@@ -230,17 +250,21 @@ test("POST a new ad | endpoint should error if no request body is passed", async
 test("POST a new ad | endpoint should error if body is undefined", async (t) => {
   // Define path parameters
   const userID = 6;
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: undefined }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 415);
   // Assert error message
   t.is(error.response.body.message, "unsupported media type undefined");
 });
 
+// Test POST a new ad | Title is null in request body (by sending a POST request to the server)
 test("POST a new ad | endpoint should error if title is null", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -248,17 +272,21 @@ test("POST a new ad | endpoint should error if title is null", async (t) => {
     title: null,
     adDescription: "string",
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
   t.is(error.response.body.message, "request.body.title should be string");
 });
 
+// Test POST a new ad | request body is an array (by sending a POST request to the server)
 test("POST a new ad | endpoint should error if request body is an array", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -272,11 +300,14 @@ test("POST a new ad | endpoint should error if request body is an array", async 
       adDescription: "string",
     },
   ];
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message

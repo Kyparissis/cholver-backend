@@ -34,8 +34,11 @@ test.after.always((t) => {
 test("GET all ads from specific user | calling the function should work successfully", async (t) => {
   // Define path parameters
   const userID = 6;
+
   // Call the function
   const result = await userUserIDAdGET(userID);
+
+  // ASSERTIONS
   // Assert that we get two entries
   t.is(result.length, 2);
   // Get the first of the entries
@@ -53,8 +56,11 @@ test("GET all ads from specific user | calling the function should work successf
 test("GET all ads from specific user | endpoint should work successfully", async (t) => {
   // Define path parameters
   const userID = 6;
+
   // Make GET request to server
   const { body, statusCode } = await t.context.got.get(`user/${userID}/ad`);
+
+  // ASSERTIONS
   // Assert success status code
   t.is(statusCode, 200);
   // Assert that we get two entries (body must be an array)

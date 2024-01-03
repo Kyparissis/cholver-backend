@@ -28,12 +28,12 @@ test.after.always((t) => {
   t.context.server.close();
 });
 
-
-
 //---------DELETE /user/{userid}/ad/{adid}---------
+
+
 // Test case for deleting an ad from user account
 test("DELETE an ad from user account | calling the function should work successfully", async (t) => {
-  //define parameters
+  // Define parameters
   const userID = 6;
   const adID = 0;
 
@@ -46,15 +46,16 @@ test("DELETE an ad from user account | calling the function should work successf
 
 // Test case for making a HTTP request
 test("DELETE an ad from user account | endpoint should work successfully", async (t) => {
-  //define parameters
+  // Define parameters
   const userID = 6;
   const adID = 0;
 
-  //Send DELETE request to server
+  // Send DELETE request to server
   const { body, statusCode } = await t.context.got.delete(
     `user/${userID}/ad/${adID}`,
   );
 
+  // ASSERTIONS
   // Assert success status code
   t.is(statusCode, 200);
   // Assert that we get the expected body length
