@@ -34,7 +34,7 @@ test.after.always((t) => {
 
 // Test GET all ads by calling the function
 test("GET all ads | calling the function should work successfully", async (t) => {
-  //call the function adGET without a keyword
+  // Call the function adGET without a keyword
   const result = await adGET();
 
   // ASSERTIONS
@@ -131,6 +131,7 @@ test("GET search for ads by keyword | endpoint should work successfully", async 
 });
 
 // Test case for searching ads by keyword with null keyword (by sending a HTTP request to the server)
+// The keyword should not be null and should be a string always
 test("GET search for ads | endpoint should error if keyword is null", async (t) => {
   // define parameter
   const keyword = null;

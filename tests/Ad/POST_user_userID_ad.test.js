@@ -75,6 +75,7 @@ test("POST a new ad | endpoint should work successfully", async (t) => {
 });
 
 // Test POST a new ad | Integer in title in request body (by sending a POST request to the server)
+// The server should return an error when the title is an integer and not a string
 test("POST a new ad | endpoint should error if title is integer", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -97,6 +98,7 @@ test("POST a new ad | endpoint should error if title is integer", async (t) => {
 });
 
 // Test POST a new ad | Integer in adDescription in request body (by sending a POST request to the server)
+// The server should return an error when the adDescription is an integer and not a string
 test("POST a new ad | endpoint should error if adDescription is integer", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -119,6 +121,7 @@ test("POST a new ad | endpoint should error if adDescription is integer", async 
 });
 
 // Test POST a new ad | Integer in adDescription,title in request body (by sending a POST request to the server)
+// The server should return an error when the adDescription and title are integers and not strings
 test("POST a new ad | endpoint should error if adDescription and title are integers", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -141,6 +144,7 @@ test("POST a new ad | endpoint should error if adDescription and title are integ
 });
 
 // Test POST a new ad | No JSON request body (by sending a POST request to the server) 
+// The server should return an error when the request body is not JSON
 test("POST a new ad | endpoint should error if content type is not JSON", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -163,6 +167,7 @@ test("POST a new ad | endpoint should error if content type is not JSON", async 
 });
 
 // Test POST a new ad | Multiple titles in request body (by sending a POST request to the server)
+// The server should return an error when the title is an array and not a string
 test("POST a new ad | endpoint should error if multiple titles are present", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -185,6 +190,7 @@ test("POST a new ad | endpoint should error if multiple titles are present", asy
 });
 
 // Test POST a new ad | Multiple titles, adDescriptions in request body (by sending a POST request to the server)
+// The server should return an error when the title and adDescription are arrays and not strings
 test("POST a new ad | endpoint should error if multiple titles and adDescriptions are present", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -207,6 +213,7 @@ test("POST a new ad | endpoint should error if multiple titles and adDescription
 });
 
 // Test POST a new ad | Multiple adDescriptions in request body (by sending a POST request to the server)
+// The server should return an error when the adDescription is an array and not a string
 test("POST a new ad | endpoint should error if multiple adDescriptions are present", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -229,6 +236,7 @@ test("POST a new ad | endpoint should error if multiple adDescriptions are prese
 });
 
 // Test POST a new ad | No request body (by sending a POST request to the server)
+// The server should return an error when the request body is not passed
 test("POST a new ad | endpoint should error if no request body is passed", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -247,6 +255,7 @@ test("POST a new ad | endpoint should error if no request body is passed", async
 });
 
 // Test POST a new ad | No request body (by sending a POST request to the server)
+// The server should return an error when the request body is undefined
 test("POST a new ad | endpoint should error if body is undefined", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -265,6 +274,7 @@ test("POST a new ad | endpoint should error if body is undefined", async (t) => 
 });
 
 // Test POST a new ad | Title is null in request body (by sending a POST request to the server)
+// The server should return an error when the title is null and not a string
 test("POST a new ad | endpoint should error if title is null", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -287,6 +297,7 @@ test("POST a new ad | endpoint should error if title is null", async (t) => {
 });
 
 // Test POST a new ad | request body is an array (by sending a POST request to the server)
+// The server should return an error when the request body is an array and not an object
 test("POST a new ad | endpoint should error if request body is an array", async (t) => {
   // Define path parameters
   const userID = 6;

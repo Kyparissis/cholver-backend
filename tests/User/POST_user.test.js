@@ -69,6 +69,7 @@ test("POST user | endpoint should work successfully", async (t) => {
 });
 
 // Test POST user by sending a POST request to the server with invalid full name
+// The server should return an error when the fullname is a number instead of a string
 test("POST user | endpoint should error if fullname is not a string", async (t) => {
   // Define request body
   const body = {
@@ -95,6 +96,7 @@ test("POST user | endpoint should error if fullname is not a string", async (t) 
 });
 
 // Test POST user by sending a POST request to the server with invalid email
+// The server should return an error when the email is a number instead of a string
 test("POST user | endpoint should error if email is not a string", async (t) => {
   // Define request body
   const body = {
@@ -121,6 +123,7 @@ test("POST user | endpoint should error if email is not a string", async (t) => 
 });
 
 // Test POST user by sending a POST request to the server with invalid age
+// The server should return an error when the age is a string instead of an integer
 test("POST user | endpoint should error if age is not an integer", async (t) => {
   // Define request body
   const body = {
@@ -147,6 +150,7 @@ test("POST user | endpoint should error if age is not an integer", async (t) => 
 });
 
 // Test POST user by sending a POST request to the server with invalid phone
+// The server should return an error when the phone is a number instead of a string
 test("POST user | endpoint should error if phone is not a string", async (t) => {
   // Define request body
   const body = {
@@ -173,6 +177,7 @@ test("POST user | endpoint should error if phone is not a string", async (t) => 
 });
 
 // Test POST user by sending a POST request to the server with gender being null
+// The server should return an error when the gender is passed as null and not an integer
 test("POST user | endpoint should error if gender is null", async (t) => {
   // Define request body
   const requestBody = {

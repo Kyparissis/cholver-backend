@@ -100,6 +100,7 @@ test("PUT user information | endpoint should work successfully", async (t) => {
 });
 
 // Test PUT user information by sending a PUT request to the server with userDescription as integer
+// The server should return an error when the userDescription is passed as integer and not a string
 test("PUT user information | endpoint should error if userDescription is integer", async (t) => {
   // Define parameters
   const userID = 1;
@@ -130,6 +131,7 @@ test("PUT user information | endpoint should error if userDescription is integer
 });
 
 // Test PUT user information by sending a PUT request to the server with gender being null
+// The server should return an error when the gender is passed as null and not an integer
 test("PUT user information | endpoint should error if gender is null", async (t) => {
   // Define parameters
   const userID = 1;
@@ -177,6 +179,7 @@ test("PUT user information | endpoint should error if request body is missing", 
 });
 
 // Test PUT user information by sending a PUT request to the server with multiple fullnames given in request body
+// The server should return an error when multiple fullnames are given
 test("PUT user information | endpoint should error if multiple fullnames given", async (t) => {
   // Define parameters
   const userID = 1;
@@ -207,6 +210,7 @@ test("PUT user information | endpoint should error if multiple fullnames given",
 });
 
 // Test PUT user information by sending a PUT request to the server with userDescription, city and fullname being integers
+// The server should return an error when userDescription, city and fullname are integers instead of strings
 test("PUT user information | endpoint should error if userDescription, city and fullname are integers", async (t) => {
   // Define parameters
   const userID = 1;
@@ -240,6 +244,7 @@ test("PUT user information | endpoint should error if userDescription, city and 
 });
 
 // Test PUT user information by sending a PUT request to the server with gender being null and rating being string
+// The server should return an error when the gender is passed as null and not an integer and rating is string
 test("PUT user information | endpoint should error if gender is null and rating is string", async (t) => {
   // Define parameters
   const userID = 1;
@@ -273,6 +278,7 @@ test("PUT user information | endpoint should error if gender is null and rating 
 });
 
 // Test PUT user information by sending a PUT request to the server with multiple fullnames and ratings given
+// The server should return an error when multiple fullnames and ratings are given
 test("PUT user information | endpoint should error if multiple fullnames and ratings are given", async (t) => {
   // Define parameters
   const userID = 1;

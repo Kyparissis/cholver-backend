@@ -56,6 +56,7 @@ test("PUT Rate User | endpoint should work successfully", async (t) => {
 });
 
 // Test PUT Rate User by sending a PUT request to the server with invalid content type
+// The server should return an error when the body is not JSON
 test("PUT Rate User | endpoint should error if content type is not json", async (t) => {
   // Define parameters
   const userId = 1;

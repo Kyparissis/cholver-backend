@@ -85,6 +85,7 @@ test("PUT interest in an ad | endpoint should work successfully", async (t) => {
 });
 
 // Test case for show interest in ad with undefined request body (by sending a HTTP request to the server)
+// The server should return an error if the request body is undefined
 test("PUT show interest in an ad | endpoint should error if request body is undefined", async (t) => {
   // Define path parameters
   const adId = 0;
@@ -103,6 +104,7 @@ test("PUT show interest in an ad | endpoint should error if request body is unde
 });
 
 // Test case for show interest in ad with null request body (by sending a HTTP request to the server)
+// The server should return an error if the request body is null
 test("PUT show interest in an ad | endpoint should error if userID is null", async (t) => {
   // Define path parameters
   const adId = 0;
@@ -124,6 +126,7 @@ test("PUT show interest in an ad | endpoint should error if userID is null", asy
 });
 
 // Test case for show interest in ad with string request body (by sending a HTTP request to the server)
+// The server should return an error if the request body is a string
 test("PUT show interest in an ad | endpoint should error if userID is string", async (t) => {
   // Define path parameters
   const adId = 0;
@@ -145,6 +148,7 @@ test("PUT show interest in an ad | endpoint should error if userID is string", a
 });
 
 // Test case for show interest in ad with request body / string values in an array (by sending a HTTP request to the server)
+// The server should return an error if the request body is an array of strings
 test("PUT show interest in an ad | endpoint should error if userID is array of strings", async (t) => {
   // Define path parameters
   const adId = 0;
@@ -166,6 +170,7 @@ test("PUT show interest in an ad | endpoint should error if userID is array of s
 });
 
 // Test case for show interest in ad with request body / integer values in an array (by sending a HTTP request to the server)
+// The server should return an error if the request body is an array of integers
 test("PUT show interest in an ad | endpoint should error if userID is array of integers", async (t) => {
   // Define path parameters
   const adId = 0;
@@ -187,6 +192,7 @@ test("PUT show interest in an ad | endpoint should error if userID is array of i
 });
 
 // Test case for show interest in ad with request body (integer and null values in an array) (by sending a HTTP request to the server)
+// The server should return an error if the request body is an array of integers and null
 test("PUT show interest in an ad | endpoint should error if userID has string and null", async (t) => {
   // Define path parameters
   const adId = 0;
@@ -208,6 +214,7 @@ test("PUT show interest in an ad | endpoint should error if userID has string an
 });
 
 // Test case for show interest in ad with array request body (by sending a HTTP request to the server)
+// The server should return an error if the request body is an array
 test("PUT show interest in an ad | endpoint should error if body is an array", async (t) => {
   // Define path parameters
   const adId = 0;

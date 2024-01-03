@@ -66,6 +66,7 @@ test("Upload Profile Picture | endpoint should work successfully", async (t) => 
 });
 
 // Test Upload Profile Picture by sending a PUT request to the server with empty content type
+// The server should return an error when the the request has no content type
 test("Upload Profile Picture | endpoint should error if no file is passed", async (t) => {
   // Define parameters
   const userId = 1;
