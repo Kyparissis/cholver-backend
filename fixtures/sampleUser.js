@@ -1,4 +1,6 @@
 'use strict';
+
+// Object to represent a sample user
 const sampleUser = {
   userDescription: 'userDescription',
   gender: 'gender',
@@ -11,4 +13,6 @@ const sampleUser = {
   email: 'email',
   age: 6,
 };
+
+// Export the sampleUser object when this file is imported
 exports.sampleUser = sampleUser;
