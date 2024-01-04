@@ -8,9 +8,7 @@ const got = require("got");
 const app = require("../../index.js");
 
 // Import functions from AdService that we want to test
-const {
-  userUserIDAdPOST,
-} = require("../../service/AdService.js");
+const { userUserIDAdPOST } = require("../../service/AdService.js");
 
 // Before each test, start the server and save the connection information  (host/port).
 // Also, create a `got` instance with the server URL already set.
@@ -28,10 +26,6 @@ test.after.always((t) => {
   t.context.server.close();
 });
 
-
-
-// -=-=-=-=-=-=-=-=-= POST user/{userID}/ad -=-=-=-=-=-=-=-=-=
-
 // Test POST a new ad (by calling the function)
 test("POST a new ad | calling the function should work successfully", async (t) => {
   // Define path parameters
@@ -40,8 +34,11 @@ test("POST a new ad | calling the function should work successfully", async (t) 
     title: "string",
     adDescription: "string",
   };
+
   // Call the function
   const result = await userUserIDAdPOST(body, userID);
+
+  // ASSERTIONS
   // Assert that we get the expected body length
   t.is(Object.keys(result).length, 1);
   // Assert that we get the expected body
@@ -56,10 +53,11 @@ test("POST a new ad | endpoint should work successfully", async (t) => {
     title: "string",
     adDescription: "string",
   };
+
   // Send POST request to server
-  const { body, statusCode } = await t.context.got.post(`user/${userID}/ad`, {
-    json: postBody,
-  });
+  const { body, statusCode } = await t.context.got.post(`user/${userID}/ad`, {json: postBody});
+
+  // ASSERTIONS
   // Assert success status code
   t.is(statusCode, 200);
   // Assert that we get the expected body length
@@ -69,6 +67,7 @@ test("POST a new ad | endpoint should work successfully", async (t) => {
 });
 
 // Test POST a new ad | Integer in title in request body (by sending a POST request to the server)
+// The server should return an error when the title is an integer and not a string
 test("POST a new ad | endpoint should error if title is integer", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -76,11 +75,14 @@ test("POST a new ad | endpoint should error if title is integer", async (t) => {
     title: 313131231,
     adDescription: "string",
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
@@ -88,6 +90,7 @@ test("POST a new ad | endpoint should error if title is integer", async (t) => {
 });
 
 // Test POST a new ad | Integer in adDescription in request body (by sending a POST request to the server)
+// The server should return an error when the adDescription is an integer and not a string
 test("POST a new ad | endpoint should error if adDescription is integer", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -95,21 +98,22 @@ test("POST a new ad | endpoint should error if adDescription is integer", async 
     title: "string",
     adDescription: 31313123131,
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
-  t.is(
-    error.response.body.message,
-    "request.body.adDescription should be string",
-  );
+  t.is(error.response.body.message, "request.body.adDescription should be string");
 });
 
 // Test POST a new ad | Integer in adDescription,title in request body (by sending a POST request to the server)
+// The server should return an error when the adDescription and title are integers and not strings
 test("POST a new ad | endpoint should error if adDescription and title are integers", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -117,20 +121,22 @@ test("POST a new ad | endpoint should error if adDescription and title are integ
     title: 131312313131,
     adDescription: 31313123131,
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
-  t.is(
-    error.response.body.message,
-    "request.body.title should be string, request.body.adDescription should be string",
-  );
+  t.is(error.response.body.message, "request.body.title should be string, request.body.adDescription should be string");
 });
 
+// Test POST a new ad | No JSON request body (by sending a POST request to the server) 
+// The server should return an error when the request body is not JSON
 test("POST a new ad | endpoint should error if content type is not JSON", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -138,11 +144,14 @@ test("POST a new ad | endpoint should error if content type is not JSON", async 
     title: "string",
     adDescription: "string",
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { body: JSON.stringify(postBody) }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 415);
   // Assert error message
@@ -150,6 +159,7 @@ test("POST a new ad | endpoint should error if content type is not JSON", async 
 });
 
 // Test POST a new ad | Multiple titles in request body (by sending a POST request to the server)
+// The server should return an error when the title is an array and not a string
 test("POST a new ad | endpoint should error if multiple titles are present", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -157,11 +167,14 @@ test("POST a new ad | endpoint should error if multiple titles are present", asy
     title: ["string", "string2"],
     adDescription: "string",
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
@@ -169,6 +182,7 @@ test("POST a new ad | endpoint should error if multiple titles are present", asy
 });
 
 // Test POST a new ad | Multiple titles, adDescriptions in request body (by sending a POST request to the server)
+// The server should return an error when the title and adDescription are arrays and not strings
 test("POST a new ad | endpoint should error if multiple titles and adDescriptions are present", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -176,21 +190,22 @@ test("POST a new ad | endpoint should error if multiple titles and adDescription
     title: ["string", "string2"],
     adDescription: ["string", "string2"],
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
-  t.is(
-    error.response.body.message,
-    "request.body.title should be string, request.body.adDescription should be string",
-  );
+  t.is(error.response.body.message, "request.body.title should be string, request.body.adDescription should be string");
 });
 
 // Test POST a new ad | Multiple adDescriptions in request body (by sending a POST request to the server)
+// The server should return an error when the adDescription is an array and not a string
 test("POST a new ad | endpoint should error if multiple adDescriptions are present", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -198,28 +213,33 @@ test("POST a new ad | endpoint should error if multiple adDescriptions are prese
     title: "string",
     adDescription: ["string", "string2"],
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
-  t.is(
-    error.response.body.message,
-    "request.body.adDescription should be string",
-  );
+  t.is(error.response.body.message, "request.body.adDescription should be string");
 });
 
+// Test POST a new ad | No request body (by sending a POST request to the server)
+// The server should return an error when the request body is not passed
 test("POST a new ad | endpoint should error if no request body is passed", async (t) => {
   // Define path parameters
   const userID = 6;
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 415);
   // Assert error message
@@ -227,20 +247,26 @@ test("POST a new ad | endpoint should error if no request body is passed", async
 });
 
 // Test POST a new ad | No request body (by sending a POST request to the server)
+// The server should return an error when the request body is undefined
 test("POST a new ad | endpoint should error if body is undefined", async (t) => {
   // Define path parameters
   const userID = 6;
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: undefined }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 415);
   // Assert error message
   t.is(error.response.body.message, "unsupported media type undefined");
 });
 
+// Test POST a new ad | Title is null in request body (by sending a POST request to the server)
+// The server should return an error when the title is null and not a string
 test("POST a new ad | endpoint should error if title is null", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -248,17 +274,22 @@ test("POST a new ad | endpoint should error if title is null", async (t) => {
     title: null,
     adDescription: "string",
   };
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
   t.is(error.response.body.message, "request.body.title should be string");
 });
 
+// Test POST a new ad | request body is an array (by sending a POST request to the server)
+// The server should return an error when the request body is an array and not an object
 test("POST a new ad | endpoint should error if request body is an array", async (t) => {
   // Define path parameters
   const userID = 6;
@@ -272,11 +303,14 @@ test("POST a new ad | endpoint should error if request body is an array", async 
       adDescription: "string",
     },
   ];
+
   // Send POST request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.post(`user/${userID}/ad`, { json: postBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message

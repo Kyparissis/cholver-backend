@@ -1,5 +1,6 @@
 "use strict";
 
+// Import the fixtures that will be used to mock responses from the database
 const { sampleUserList } = require('../fixtures/sampleUserList');
 const { sampleUser } = require('../fixtures/sampleUser');
 

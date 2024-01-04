@@ -1,5 +1,8 @@
 'use strict';
+
+// Array to represent a list of sample users
 const sampleUserList = [
+  // The first user in the list
   {
     userDescription: 'userDescription',
     gender: 'gender',
@@ -12,6 +15,7 @@ const sampleUserList = [
     email: 'email',
     age: 6,
   },
+  // The second user in the list
   {
     userDescription: 'userDescription',
     gender: 'gender',
@@ -25,4 +29,6 @@ const sampleUserList = [
     age: 6,
   },
 ];
+
+// Export the sampleUserList array when this file is imported
 exports.sampleUserList = sampleUserList;

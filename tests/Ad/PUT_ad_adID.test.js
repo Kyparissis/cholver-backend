@@ -8,9 +8,7 @@ const got = require("got");
 const app = require("../../index.js");
 
 // Import functions from AdService that we want to test
-const {
-  adAdIDPUT,
-} = require("../../service/AdService.js");
+const { adAdIDPUT } = require("../../service/AdService.js");
 
 // Before each test, start the server and save the connection information  (host/port).
 // Also, create a `got` instance with the server URL already set.
@@ -28,17 +26,11 @@ test.after.always((t) => {
   t.context.server.close();
 });
 
-
-
-
-//---------PUT /ad/{adid}----------
-//Show interest in an ad
-// Test case for showing interest in an ad by calling the function
+// Test PUT interest in an ad by calling the function
 test("PUT interest in an ad | calling the function should work successfully", async (t) => {
-  //define parameters
+  // Define parameters
   const adId = 0;
-
-  // define request body for showing interest in an ad
+  // Define request body for showing interest in an ad
   const requestBody = {
     userID: 0,
   };
@@ -46,12 +38,11 @@ test("PUT interest in an ad | calling the function should work successfully", as
   // Call adAdIDPUT function to show interest in an ad
   const result = await adAdIDPUT(requestBody, adId);
 
+  // ASSERTIONS
   // Assert that the result is an object
   t.true(typeof result === "object");
-
   // Assert that we get the expected body length
   t.is(Object.keys(result).length, 6);
-
   // Assert that we get the expected body
   t.is(result.adDescription, "adDescription");
   t.is(result.date, "date");
@@ -61,26 +52,25 @@ test("PUT interest in an ad | calling the function should work successfully", as
   t.is(result.userID, 6);
 });
 
-//Test case for making a HTTP request
+// Test PUT interest in an ad by sending a HTTP request to the server
 test("PUT interest in an ad | endpoint should work successfully", async (t) => {
-  //define parameters
+  // Define parameters
   const adId = 0;
-
   // define request body for showing interest in an ad
   const requestBody = {
     userID: 6,
   };
 
-  //PUT request
+  // Send PUT request to server
   const { body, statusCode } = await t.context.got.put(`ad/${adId}`, {
     json: requestBody,
   });
 
+  // ASSERTIONS
   // Assert success status code
   t.is(statusCode, 200);
   // Assert that we get the expected body length
   t.is(Object.keys(body).length, 6);
-
   // Assert that we get the expected body
   t.is(body.adDescription, "adDescription");
   t.is(body.date, "date");
@@ -91,14 +81,18 @@ test("PUT interest in an ad | endpoint should work successfully", async (t) => {
 });
 
 // Test case for show interest in ad with undefined request body (by sending a HTTP request to the server)
+// The server should return an error if the request body is undefined
 test("PUT show interest in an ad | endpoint should error if request body is undefined", async (t) => {
   // Define path parameters
   const adId = 0;
+
   // Send PUT request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.put(`ad/${adId}`, { json: undefined }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 415);
   // Assert error message
@@ -106,17 +100,21 @@ test("PUT show interest in an ad | endpoint should error if request body is unde
 });
 
 // Test case for show interest in ad with null request body (by sending a HTTP request to the server)
+// The server should return an error if the request body is null
 test("PUT show interest in an ad | endpoint should error if userID is null", async (t) => {
   // Define path parameters
   const adId = 0;
   const requestBody = {
     userID: null,
   };
+
   // Send PUT request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.put(`ad/${adId}`, { json: requestBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
@@ -124,17 +122,21 @@ test("PUT show interest in an ad | endpoint should error if userID is null", asy
 });
 
 // Test case for show interest in ad with string request body (by sending a HTTP request to the server)
+// The server should return an error if the request body is a string
 test("PUT show interest in an ad | endpoint should error if userID is string", async (t) => {
   // Define path parameters
   const adId = 0;
   const requestBody = {
     userID: "userID1",
   };
+
   // Send PUT request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.put(`ad/${adId}`, { json: requestBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
@@ -142,17 +144,21 @@ test("PUT show interest in an ad | endpoint should error if userID is string", a
 });
 
 // Test case for show interest in ad with request body / string values in an array (by sending a HTTP request to the server)
+// The server should return an error if the request body is an array of strings
 test("PUT show interest in an ad | endpoint should error if userID is array of strings", async (t) => {
   // Define path parameters
   const adId = 0;
   const requestBody = {
     userID: ["userID1", "userID2"],
   };
+
   // Send PUT request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.put(`ad/${adId}`, { json: requestBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
@@ -160,17 +166,21 @@ test("PUT show interest in an ad | endpoint should error if userID is array of s
 });
 
 // Test case for show interest in ad with request body / integer values in an array (by sending a HTTP request to the server)
+// The server should return an error if the request body is an array of integers
 test("PUT show interest in an ad | endpoint should error if userID is array of integers", async (t) => {
   // Define path parameters
   const adId = 0;
   const requestBody = {
     userID: [2, 3],
   };
+
   // Send PUT request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.put(`ad/${adId}`, { json: requestBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
@@ -178,17 +188,21 @@ test("PUT show interest in an ad | endpoint should error if userID is array of i
 });
 
 // Test case for show interest in ad with request body (integer and null values in an array) (by sending a HTTP request to the server)
+// The server should return an error if the request body is an array of integers and null
 test("PUT show interest in an ad | endpoint should error if userID has string and null", async (t) => {
   // Define path parameters
   const adId = 0;
   const requestBody = {
     userID: ["userID1", null],
   };
+
   // Send PUT request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.put(`ad/${adId}`, { json: requestBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message
@@ -196,6 +210,7 @@ test("PUT show interest in an ad | endpoint should error if userID has string an
 });
 
 // Test case for show interest in ad with array request body (by sending a HTTP request to the server)
+// The server should return an error if the request body is an array
 test("PUT show interest in an ad | endpoint should error if body is an array", async (t) => {
   // Define path parameters
   const adId = 0;
@@ -207,11 +222,14 @@ test("PUT show interest in an ad | endpoint should error if body is an array", a
       userID: 2,
     },
   ];
+
   // Send PUT request to server
   const error = await t.throwsAsync(async () => {
     await t.context.got.put(`ad/${adId}`, { json: requestBody }),
       { instanceof: got.HTTPError };
   });
+
+  // ASSERTIONS
   // Assert error status code
   t.is(error.response.statusCode, 400);
   // Assert error message

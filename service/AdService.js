@@ -1,9 +1,10 @@
 'use strict';
 
-const { sampleUserList } = require('../fixtures/sampleUserList');
-const { sampleAdList } = require('../fixtures/sampleAdList');
-const { sampleAdListWithUsers } = require('../fixtures/sampleAdListWithUsers');
-const { sampleAd } = require('../fixtures/sampleAd');
+// Import the fixtures that will be used to mock responses from the database
+const { sampleUserList } = require('../fixtures/sampleUserList'); 
+const { sampleAdList } = require('../fixtures/sampleAdList');       
+const { sampleAdListWithUsers } = require('../fixtures/sampleAdListWithUsers'); 
+const { sampleAd } = require('../fixtures/sampleAd');          
 
 /**
  * Show interest in an ad

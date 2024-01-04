@@ -8,9 +8,7 @@ const got = require("got");
 const app = require("../../index.js");
 
 // Import functions from AdService that we want to test
-const {
-  userUserIDAdAdIDGET,
-} = require("../../service/AdService.js");
+const { userUserIDAdAdIDGET } = require("../../service/AdService.js");
 
 // Before each test, start the server and save the connection information  (host/port).
 // Also, create a `got` instance with the server URL already set.
@@ -36,8 +34,11 @@ test("GET the interested users for an ad | calling the function should work succ
   // Define path parameters
   const userID = 6;
   const adID = 1;
+
   // Call the function
   const result = await userUserIDAdAdIDGET(userID, adID);
+
+  // ASSERTIONS
   // Assert that we get two entries (body must be an array)
   t.is(result.length, 2);
   // Get the first of the entries of the body
@@ -60,10 +61,13 @@ test("GET the interested users for an ad | endpoint should work successfully", a
   // Define path parameters
   const userID = 6;
   const adID = 1;
+
   // Make GET request to server
   const { body, statusCode } = await t.context.got.get(
     `user/${userID}/ad/${adID}`,
   );
+
+  // ASSERTIONS
   // Assert success status code
   t.is(statusCode, 200);
   // Assert that we get two entries (body must be an array)
