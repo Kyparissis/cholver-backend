@@ -35,7 +35,7 @@ function writeJson (response, arg1, arg2) {
 
   // Send the response 
   sendResponse(response, code, formattedPayload);
-};
+}
 
 // Export the function to be used in other files
 exports.writeJson = writeJson
