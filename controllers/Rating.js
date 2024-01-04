@@ -12,11 +12,11 @@ var Rating = require("../service/RatingService"); // Import the Rating service s
 
 /**
  * Function to handle the HTTP PUT request to the /user/{userID}/rate endpoint
- * @param {*} req: The request object 
- * @param {*} res: The response object 
- * @param {*} next: The next middleware function 
- * @param {*} body: The request body 
- * @param {*} userID: The user ID to rate 
+ * @param {Object} req: The request object 
+ * @param {Object} res: The response object 
+ * @param {Function} next: The next middleware function 
+ * @param {Object} body: The request body 
+ * @param {BigInteger} userID: The user ID to rate 
  */
 module.exports.userUserIDRatePUT = function userUserIDRatePUT(req, res, next, body, userID) {
   // Call the Rating service function to handle the HTTP PUT request
