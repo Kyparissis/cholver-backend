@@ -26,8 +26,6 @@ test.after.always((t) => {
   t.context.server.close();
 });
 
-// --------- PUT /ad/{adid} ----------
-
 // Test PUT interest in an ad by calling the function
 test("PUT interest in an ad | calling the function should work successfully", async (t) => {
   // Define parameters

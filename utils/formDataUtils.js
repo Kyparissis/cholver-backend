@@ -20,7 +20,7 @@ function getFormDataDetails({ formDataFieldName, fileContent, fileName }) {
   // Return the request body and headers
   // in the format required by the request
   return {
-    requestBody: Readable.from(encoder.encode()),
+    requestBody: Readable.from(encoder.encode()),   // Convert the encoded form data to a readable stream
     requestHeaders: encoder.headers,
   };
 }

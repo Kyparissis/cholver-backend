@@ -55,9 +55,7 @@ test("POST a new ad | endpoint should work successfully", async (t) => {
   };
 
   // Send POST request to server
-  const { body, statusCode } = await t.context.got.post(`user/${userID}/ad`, {
-    json: postBody,
-  });
+  const { body, statusCode } = await t.context.got.post(`user/${userID}/ad`, {json: postBody});
 
   // ASSERTIONS
   // Assert success status code
