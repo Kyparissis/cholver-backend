@@ -14,8 +14,8 @@ const { sampleAd } = require('../fixtures/sampleAd');
  * adID String
  * returns Ad
  **/
-exports.adAdIDPUT = function (body, adID) {
-  return new Promise(function (resolve, reject) {
+exports.adAdIDPUT = function () {
+  return new Promise(function (resolve) {
     var examples = {};
     examples['application/json'] = sampleAd;
     if (Object.keys(examples).length > 0) {
@@ -33,8 +33,8 @@ exports.adAdIDPUT = function (body, adID) {
  * keyword String  (optional)
  * returns List
  **/
-exports.adGET = function (keyword) {
-  return new Promise(function (resolve, reject) {
+exports.adGET = function () {
+  return new Promise(function (resolve) {
     var examples = {};
     examples['application/json'] = sampleAdListWithUsers;
     if (Object.keys(examples).length > 0) {
@@ -53,8 +53,8 @@ exports.adGET = function (keyword) {
  * adID String the ad that gets deleted
  * no response value expected for this operation
  **/
-exports.userUserIDAdAdIDDELETE = function (userID, adID) {
-  return new Promise(function (resolve, reject) {
+exports.userUserIDAdAdIDDELETE = function () {
+  return new Promise(function (resolve) {
     resolve();
   });
 };
@@ -67,8 +67,8 @@ exports.userUserIDAdAdIDDELETE = function (userID, adID) {
  * adID String the ad whose interested users should be returned
  * returns List
  **/
-exports.userUserIDAdAdIDGET = function (userID, adID) {
-  return new Promise(function (resolve, reject) {
+exports.userUserIDAdAdIDGET = function () {
+  return new Promise(function (resolve) {
     var examples = {};
     examples['application/json'] = sampleUserList;
     if (Object.keys(examples).length > 0) {
@@ -86,8 +86,8 @@ exports.userUserIDAdAdIDGET = function (userID, adID) {
  * userID String the user whose ads should be returned
  * returns List
  **/
-exports.userUserIDAdGET = function (userID) {
-  return new Promise(function (resolve, reject) {
+exports.userUserIDAdGET = function () {
+  return new Promise(function (resolve) {
     var examples = {};
     examples['application/json'] = sampleAdList;
     if (Object.keys(examples).length > 0) {
@@ -106,8 +106,8 @@ exports.userUserIDAdGET = function (userID) {
  * userID String user that posts the ad
  * returns response_message
  **/
-exports.userUserIDAdPOST = function (body, userID) {
-  return new Promise(function (resolve, reject) {
+exports.userUserIDAdPOST = function () {
+  return new Promise(function (resolve) {
     var examples = {};
     examples['application/json'] = {
       message: 'message',

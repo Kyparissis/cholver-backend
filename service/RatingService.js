@@ -8,8 +8,8 @@
  * userID String
  * no response value expected for this operation
  **/
-exports.userUserIDRatePUT = function (body, userID) {
-  return new Promise(function (resolve, reject) {
+exports.userUserIDRatePUT = function () {
+  return new Promise(function (resolve) {
     resolve();
   });
 };

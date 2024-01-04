@@ -11,8 +11,8 @@ const { sampleUser } = require('../fixtures/sampleUser');
  * keyword String
  * returns List
  **/
-exports.userGET = function (keyword) {
-  return new Promise(function (resolve, reject) {
+exports.userGET = function () {
+  return new Promise(function (resolve) {
     var examples = {};
     examples['application/json'] = sampleUserList;
     if (Object.keys(examples).length > 0) {
@@ -30,8 +30,8 @@ exports.userGET = function (keyword) {
  * body UserCreate Information needed to create a new user profile
  * no response value expected for this operation
  **/
-exports.userPOST = function (body) {
-  return new Promise(function (resolve, reject) {
+exports.userPOST = function () {
+  return new Promise(function (resolve) {
     resolve();
   });
 };
@@ -43,8 +43,8 @@ exports.userPOST = function (body) {
  * userID String User that should be deleted
  * returns User
  **/
-exports.userUserIDDELETE = function (userID) {
-  return new Promise(function (resolve, reject) {
+exports.userUserIDDELETE = function () {
+  return new Promise(function (resolve) {
     var examples = {};
     examples['application/json'] = sampleUser;
     if (Object.keys(examples).length > 0) {
@@ -62,8 +62,8 @@ exports.userUserIDDELETE = function (userID) {
  * userID String User that should be returned
  * returns User
  **/
-exports.userUserIDGET = function (userID) {
-  return new Promise(function (resolve, reject) {
+exports.userUserIDGET = function () {
+  return new Promise(function (resolve) {
     var examples = {};
     examples['application/json'] = sampleUser;
     if (Object.keys(examples).length > 0) {
@@ -82,8 +82,8 @@ exports.userUserIDGET = function (userID) {
  * userID String User that needs to be updated
  * returns User
  **/
-exports.userUserIDPUT = function (body, userID) {
-  return new Promise(function (resolve, reject) {
+exports.userUserIDPUT = function () {
+  return new Promise(function (resolve) {
     var examples = {};
     examples['application/json'] = sampleUser;
     if (Object.keys(examples).length > 0) {
@@ -100,8 +100,8 @@ exports.userUserIDPUT = function (body, userID) {
  * userID String
  * returns inline_response_200
  **/
-exports.userUserIDProfile_picturePUT = function (userID) {
-  return new Promise(function (resolve, reject) {
+exports.userUserIDProfile_picturePUT = function () {
+  return new Promise(function (resolve) {
     var examples = {};
     examples["application/json"] = {
       message: "Picture uploaded successfully",
