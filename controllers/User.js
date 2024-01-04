@@ -12,10 +12,10 @@ var User = require("../service/UserService"); // Import the User service so we c
 
 /**
  * Function to handle the HTTP GET request to the /user endpoint
- * @param {*} req: The request object 
- * @param {*} res: The response object 
- * @param {*} next: The next middleware function 
- * @param {*} keyword: The keyword to search for in the user name 
+ * @param {Object} req: The request object 
+ * @param {Object} res: The response object 
+ * @param {Function} next: The next middleware function 
+ * @param {String} keyword: The keyword to search for in the user name 
  */
 module.exports.userGET = function userGET(req, res, next, keyword) {
   // Call the User service function to handle the HTTP GET request
@@ -32,10 +32,10 @@ module.exports.userGET = function userGET(req, res, next, keyword) {
 
 /**
  * Function to handle the HTTP POST request to the /user endpoint
- * @param {*} req: The request object 
- * @param {*} res: The response object 
- * @param {*} next: The next middleware function 
- * @param {*} body: The request body 
+ * @param {Object} req: The request object 
+ * @param {Object} res: The response object 
+ * @param {Function} next: The next middleware function 
+ * @param {Object} body: The request body 
  */
 module.exports.userPOST = function userPOST(req, res, next, body) {
   // Call the User service function to handle the HTTP POST request
@@ -52,10 +52,10 @@ module.exports.userPOST = function userPOST(req, res, next, body) {
 
 /**
  * Function to handle the HTTP DELETE request to the /user/{userID} endpoint
- * @param {*} req: The request object 
- * @param {*} res: The response object 
- * @param {*} next: The next middleware function 
- * @param {*} userID: The user ID to delete 
+ * @param {Object} req: The request object 
+ * @param {Object} res: The response object 
+ * @param {Function} next: The next middleware function 
+ * @param {BigInteger} userID: The user ID to delete 
  */
 module.exports.userUserIDDELETE = function userUserIDDELETE(req, res, next, userID) {
   // Call the User service function to handle the HTTP DELETE request
@@ -72,10 +72,10 @@ module.exports.userUserIDDELETE = function userUserIDDELETE(req, res, next, user
 
 /**
  * Function to handle the HTTP GET request to the /user/{userID} endpoint
- * @param {*} req: The request object 
- * @param {*} res: The response object 
- * @param {*} next: The next middleware function 
- * @param {*} userID: The user ID to get 
+ * @param {Object} req: The request object 
+ * @param {Object} res: The response object 
+ * @param {Function} next: The next middleware function 
+ * @param {BigInteger} userID: The user ID to get 
  */
 module.exports.userUserIDGET = function userUserIDGET(req, res, next, userID) {
   // Call the User service function to handle the HTTP GET request
@@ -92,11 +92,11 @@ module.exports.userUserIDGET = function userUserIDGET(req, res, next, userID) {
 
 /**
  * Function to handle the HTTP PUT request to the /user/{userID} endpoint
- * @param {*} req: The request object 
- * @param {*} res: The response object 
- * @param {*} next: The next middleware function 
- * @param {*} body: The request body 
- * @param {*} userID: The user ID to update 
+ * @param {Object} req: The request object 
+ * @param {Object} res: The response object 
+ * @param {Function} next: The next middleware function 
+ * @param {Object} body: The request body 
+ * @param {BigInteger} userID: The user ID to update 
  */
 module.exports.userUserIDPUT = function userUserIDPUT(req, res, next, body, userID) {
   // Call the User service function to handle the HTTP PUT request
@@ -113,10 +113,10 @@ module.exports.userUserIDPUT = function userUserIDPUT(req, res, next, body, user
 
 /**
  * Function to handle the HTTP PUT request to the /user/{userID}/profile_picture endpoint
- * @param {*} req: The request object 
- * @param {*} res: The response object 
- * @param {*} next: The next middleware function 
- * @param {*} userID: The user ID to update the profile picture 
+ * @param {Object} req: The request object 
+ * @param {Object} res: The response object 
+ * @param {Function} next: The next middleware function 
+ * @param {BigInteger} userID: The user ID to update the profile picture 
  */
 module.exports.userUserIDProfile_picturePUT = function userUserIDProfile_picturePUT(req, res, next, userID) {
   // Call the User service function to handle the HTTP PUT request
