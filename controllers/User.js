@@ -17,7 +17,7 @@ var User = require("../service/UserService"); // Import the User service so we c
  * @param {Function} next: The next middleware function 
  * @param {String} keyword: The keyword to search for in the user name 
  */
-module.exports.userGET = function userGET(req, res, next, keyword) {
+module.exports.userGET = function userGET(_req, res, _next, keyword) {
   // Call the User service function to handle the HTTP GET request
   User.userGET(keyword)
     // If the promise is resolved, send a 200 response with the users
@@ -37,7 +37,7 @@ module.exports.userGET = function userGET(req, res, next, keyword) {
  * @param {Function} next: The next middleware function 
  * @param {Object} body: The request body 
  */
-module.exports.userPOST = function userPOST(req, res, next, body) {
+module.exports.userPOST = function userPOST(_req, res, _next, body) {
   // Call the User service function to handle the HTTP POST request
   User.userPOST(body)
     // If the promise is resolved, send a 201 response with the created user
