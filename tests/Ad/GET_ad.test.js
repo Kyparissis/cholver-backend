@@ -8,9 +8,7 @@ const got = require("got");
 const app = require("../../index.js");
 
 // Import functions from AdService that we want to test
-const {
-  adGET,
-} = require("../../service/AdService.js");
+const { adGET } = require("../../service/AdService.js");
 
 // Before each test, start the server and save the connection information  (host/port).
 // Also, create a `got` instance with the server URL already set.

@@ -8,9 +8,7 @@ const got = require("got");
 const app = require("../../index.js");
 
 // Import functions from AdService that we want to test
-const {
-  userUserIDAdPOST,
-} = require("../../service/AdService.js");
+const { userUserIDAdPOST } = require("../../service/AdService.js");
 
 // Before each test, start the server and save the connection information  (host/port).
 // Also, create a `got` instance with the server URL already set.
@@ -27,10 +25,6 @@ test.before(async (t) => {
 test.after.always((t) => {
   t.context.server.close();
 });
-
-
-
-// -=-=-=-=-=-=-=-=-= POST user/{userID}/ad -=-=-=-=-=-=-=-=-=
 
 // Test POST a new ad (by calling the function)
 test("POST a new ad | calling the function should work successfully", async (t) => {
