@@ -1,33 +1,24 @@
+// fixture for a sample array of two users
+
 'use strict';
+
+const user = {
+  userDescription: 'userDescription',
+  gender: 'gender',
+  city: 'city',
+  phone: 'phone',
+  profilePic: '',
+  rating: 1,
+  fullname: 'fullname',
+  userID: 0,
+  email: 'email',
+  age: 6,
+};
 
 // Array to represent a list of sample users
 const sampleUserList = [
-  // The first user in the list
-  {
-    userDescription: 'userDescription',
-    gender: 'gender',
-    city: 'city',
-    phone: 'phone',
-    profilePic: '',
-    rating: 1,
-    fullname: 'fullname',
-    userID: 0,
-    email: 'email',
-    age: 6,
-  },
-  // The second user in the list
-  {
-    userDescription: 'userDescription',
-    gender: 'gender',
-    city: 'city',
-    phone: 'phone',
-    profilePic: '',
-    rating: 1,
-    fullname: 'fullname',
-    userID: 0,
-    email: 'email',
-    age: 6,
-  },
+  user,
+  user,
 ];
 
 // Export the sampleUserList array when this file is imported
