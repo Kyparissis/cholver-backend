@@ -1,2 +1,5 @@
+# Ignore all node_modules generated files by npm install 
 node_modules/*
+
+# Ignore all coverage generated files by npm test
 coverage/*
