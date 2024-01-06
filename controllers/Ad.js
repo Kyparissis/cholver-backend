@@ -18,9 +18,9 @@ var Ad = require("../service/AdService");   // Import the Ad service so we can a
  * @param {Object} body: The request body 
  * @param {BigInteger} adID: The ad ID to update 
  */
-module.exports.adAdIDPUT = function adAdIDPUT(req, res, next, body, adID) {
+module.exports.adAdIDPUT = function adAdIDPUT(req, res, next) {
   // Call the Ad service function to handle the HTTP PUT request
-  Ad.adAdIDPUT(body, adID)
+  Ad.adAdIDPUT()
     // If the promise is resolved, send a 200 response with the updated ad
     .then(function (response) {
       utils.writeJson(res, response);
@@ -59,9 +59,9 @@ module.exports.adGET = function adGET(req, res, next, keyword) {
  * @param {BigInt} userID: The user ID to delete the ad from 
  * @param {BigInteger} adID: The ad ID to delete from the user 
  */
-module.exports.userUserIDAdAdIDDELETE = function userUserIDAdAdIDDELETE(req, res, next, userID, adID) {
+module.exports.userUserIDAdAdIDDELETE = function userUserIDAdAdIDDELETE(req, res, next) {
   // Call the Ad service function to handle the HTTP DELETE request
-  Ad.userUserIDAdAdIDDELETE(userID, adID)
+  Ad.userUserIDAdAdIDDELETE()
     // If the promise is resolved, send a 200 response with the deleted ad
     .then(function (response) {
       utils.writeJson(res, response);
@@ -80,9 +80,9 @@ module.exports.userUserIDAdAdIDDELETE = function userUserIDAdAdIDDELETE(req, res
  * @param {BigInteger} userID: The user ID to get the ad from 
  * @param {BigInteger} adID: The ad ID to get from the user 
  */
-module.exports.userUserIDAdAdIDGET = function userUserIDAdAdIDGET(req, res, next, userID, adID) {
+module.exports.userUserIDAdAdIDGET = function userUserIDAdAdIDGET(req, res, next) {
   // Call the Ad service function to handle the HTTP GET request
-  Ad.userUserIDAdAdIDGET(userID, adID)
+  Ad.userUserIDAdAdIDGET()
     // If the promise is resolved, send a 200 response with the ad
     .then(function (response) {
       utils.writeJson(res, response);
@@ -121,9 +121,9 @@ module.exports.userUserIDAdGET = function userUserIDAdGET(req, res, next, userID
  * @param {Object} body: The request body 
  * @param {BigInteger} userID: The user ID to create the ad for 
  */
-module.exports.userUserIDAdPOST = function userUserIDAdPOST(req, res, next, body, userID) {
+module.exports.userUserIDAdPOST = function userUserIDAdPOST(req, res, next) {
   // Call the Ad service function to handle the HTTP POST request
-  Ad.userUserIDAdPOST(body, userID)
+  Ad.userUserIDAdPOST()
     // If the promise is resolved, send a 200 response with the created ad
     .then(function (response) {
       utils.writeJson(res, response);

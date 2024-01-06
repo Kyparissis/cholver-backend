@@ -98,9 +98,9 @@ module.exports.userUserIDGET = function userUserIDGET(req, res, next, userID) {
  * @param {Object} body: The request body 
  * @param {BigInteger} userID: The user ID to update 
  */
-module.exports.userUserIDPUT = function userUserIDPUT(req, res, next, body, userID) {
+module.exports.userUserIDPUT = function userUserIDPUT(req, res, next) {
   // Call the User service function to handle the HTTP PUT request
-  User.userUserIDPUT(body, userID)
+  User.userUserIDPUT()
     // If the promise is resolved, send a 200 response with the updated user
     .then(function (response) {
       utils.writeJson(res, response);
