@@ -18,9 +18,9 @@ var Rating = require("../service/RatingService"); // Import the Rating service s
  * @param {Object} body: The request body 
  * @param {BigInteger} userID: The user ID to rate 
  */
-module.exports.userUserIDRatePUT = function userUserIDRatePUT(req, res, next, body, userID) {
+module.exports.userUserIDRatePUT = function userUserIDRatePUT(req, res, next) {
   // Call the Rating service function to handle the HTTP PUT request
-  Rating.userUserIDRatePUT(body, userID)
+  Rating.userUserIDRatePUT()
     // If the promise is resolved, send a 200 response with the updated rating
     .then(function (response) {
       utils.writeJson(res, response);
