@@ -27,14 +27,14 @@ module.exports.userGET = function userGET(req, res, next, keyword) {
     // If the promise is resolved, send a 200 response with the users
     .then(function (response) {
       utils.writeJson(res, response);
+
+      // Call the next middleware function
+      next();
     })
     // If the promise is rejected, send a 500 response with the error
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-
-    // Call the next middleware function
-    next();
 };
 
 /**
@@ -54,14 +54,14 @@ module.exports.userPOST = function userPOST(req, res, next, body) {
     // If the promise is resolved, send a 201 response with the created user
     .then(function (response) {
       utils.writeJson(res, response);
+
+      // Call the next middleware function
+      next();
     })
     // If the promise is rejected, send a 500 response with the error
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-
-    // Call the next middleware function
-    next();
 };
 
 /**
@@ -82,14 +82,14 @@ module.exports.userUserIDDELETE = function userUserIDDELETE(req, res, next, user
     // If the promise is resolved, send a 200 response with the deleted user
     .then(function (response) {
       utils.writeJson(res, response);
+
+      // Call the next middleware function
+      next();
     })
     // If the promise is rejected, send a 500 response with the error
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-
-    // Call the next middleware function
-    next();
 };
 
 /**
@@ -109,14 +109,14 @@ module.exports.userUserIDGET = function userUserIDGET(req, res, next, userID) {
     // If the promise is resolved, send a 200 response with the user
     .then(function (response) {
       utils.writeJson(res, response);
+
+      // Call the next middleware function
+      next();
     })
     // If the promise is rejected, send a 500 response with the error
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-
-    // Call the next middleware function
-    next();
 };
 
 /**
@@ -137,14 +137,14 @@ module.exports.userUserIDPUT = function userUserIDPUT(req, res, next) {
     // If the promise is resolved, send a 200 response with the updated user
     .then(function (response) {
       utils.writeJson(res, response);
+
+      // Call the next middleware function
+      next();
     })
     // If the promise is rejected, send a 500 response with the error
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-
-    // Call the next middleware function
-    next();
 };
 
 /**
@@ -164,12 +164,12 @@ module.exports.userUserIDProfile_picturePUT = function userUserIDProfile_picture
     // If the promise is resolved, send a 200 response with the updated user
     .then(function (response) {
       utils.writeJson(res, response);
+
+      // Call the next middleware function
+      next();
     })
     // If the promise is rejected, send a 500 response with the error
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-    
-    // Call the next middleware function
-    next();
 };

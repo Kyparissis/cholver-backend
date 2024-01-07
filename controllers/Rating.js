@@ -28,12 +28,12 @@ module.exports.userUserIDRatePUT = function userUserIDRatePUT(req, res, next) {
     // If the promise is resolved, send a 200 response with the updated rating
     .then(function (response) {
       utils.writeJson(res, response);
+
+      // Call the next middleware function
+      next();
     })
     // If the promise is rejected, send a 500 response with the error
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-
-    // Call the next middleware function
-    next();
 };

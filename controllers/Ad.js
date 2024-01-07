@@ -19,7 +19,7 @@ var Ad = require("../service/AdService");   // Import the Ad service so we can a
  * @param {BigInteger} adID: The ad ID to update 
  */
 module.exports.adAdIDPUT = function adAdIDPUT(req, res, next) {
-  if (!req){  // Check if the request is null
+  if (!req) {  // Check if the request is null
     return null;
   }
 
@@ -28,14 +28,14 @@ module.exports.adAdIDPUT = function adAdIDPUT(req, res, next) {
     // If the promise is resolved, send a 200 response with the updated ad
     .then(function (response) {
       utils.writeJson(res, response);
+
+      // Call the next middleware function
+      next();
     })
     // If the promise is rejected, send a 500 response with the error
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-
-    // Call the next middleware function
-    next();
 };
 
 /**
@@ -46,7 +46,7 @@ module.exports.adAdIDPUT = function adAdIDPUT(req, res, next) {
  * @param {String} keyword: The keyword to search for in the ad title
  */
 module.exports.adGET = function adGET(req, res, next, keyword) {
-  if (!req){  // Check if the request is null
+  if (!req) {  // Check if the request is null
     return null;
   }
 
@@ -55,14 +55,14 @@ module.exports.adGET = function adGET(req, res, next, keyword) {
     // If the promise is resolved, send a 200 response with the ads
     .then(function (response) {
       utils.writeJson(res, response);
+
+      // Call the next middleware function
+      next();
     })
     // If the promise is rejected, send a 500 response with the error
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-
-    // Call the next middleware function
-    next();
 };
 
 /**
@@ -74,7 +74,7 @@ module.exports.adGET = function adGET(req, res, next, keyword) {
  * @param {BigInteger} adID: The ad ID to delete from the user 
  */
 module.exports.userUserIDAdAdIDDELETE = function userUserIDAdAdIDDELETE(req, res, next) {
-  if (!req){  // Check if the request is null
+  if (!req) {  // Check if the request is null
     return null;
   }
 
@@ -83,14 +83,14 @@ module.exports.userUserIDAdAdIDDELETE = function userUserIDAdAdIDDELETE(req, res
     // If the promise is resolved, send a 200 response with the deleted ad
     .then(function (response) {
       utils.writeJson(res, response);
+
+      // Call the next middleware function
+      next();
     })
     // If the promise is rejected, send a 500 response with the error
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-
-    // Call the next middleware function
-    next();
 };
 
 /**
@@ -102,7 +102,7 @@ module.exports.userUserIDAdAdIDDELETE = function userUserIDAdAdIDDELETE(req, res
  * @param {BigInteger} adID: The ad ID to get from the user 
  */
 module.exports.userUserIDAdAdIDGET = function userUserIDAdAdIDGET(req, res, next) {
-  if (!req){  // Check if the request is null
+  if (!req) {  // Check if the request is null
     return null;
   }
 
@@ -111,14 +111,14 @@ module.exports.userUserIDAdAdIDGET = function userUserIDAdAdIDGET(req, res, next
     // If the promise is resolved, send a 200 response with the ad
     .then(function (response) {
       utils.writeJson(res, response);
+
+      // Call the next middleware function
+      next();
     })
     // If the promise is rejected, send a 500 response with the error
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-
-    // Call the next middleware function
-    next();
 };
 
 /**
@@ -129,7 +129,7 @@ module.exports.userUserIDAdAdIDGET = function userUserIDAdAdIDGET(req, res, next
  * @param {BigInteger} userID: The user ID to get the ads from
  */
 module.exports.userUserIDAdGET = function userUserIDAdGET(req, res, next, userID) {
-  if (!req){  // Check if the request is null
+  if (!req) {  // Check if the request is null
     return null;
   }
 
@@ -138,14 +138,14 @@ module.exports.userUserIDAdGET = function userUserIDAdGET(req, res, next, userID
     // If the promise is resolved, send a 200 response with the ads
     .then(function (response) {
       utils.writeJson(res, response);
+
+      // Call the next middleware function
+      next();
     })
     // If the promise is rejected, send a 500 response with the error
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-
-    // Call the next middleware function
-    next();
 };
 
 /**
@@ -157,7 +157,7 @@ module.exports.userUserIDAdGET = function userUserIDAdGET(req, res, next, userID
  * @param {BigInteger} userID: The user ID to create the ad for 
  */
 module.exports.userUserIDAdPOST = function userUserIDAdPOST(req, res, next) {
-  if (!req){  // Check if the request is null
+  if (!req) {  // Check if the request is null
     return null;
   }
 
@@ -166,12 +166,12 @@ module.exports.userUserIDAdPOST = function userUserIDAdPOST(req, res, next) {
     // If the promise is resolved, send a 200 response with the created ad
     .then(function (response) {
       utils.writeJson(res, response);
+
+      // Call the next middleware function
+      next();
     })
     // If the promise is rejected, send a 500 response with the error
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-
-    // Call the next middleware function
-    next();
 };
